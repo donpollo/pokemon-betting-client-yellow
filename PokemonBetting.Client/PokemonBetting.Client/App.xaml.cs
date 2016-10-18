@@ -8,7 +8,8 @@ namespace PokemonBetting.Client
         {
             this.InitializeComponent();
 
-            this.MainPage = new MainPage();
+            //this.MainPage = new MainPage();
+            this.MainPage = new AccountForm();
         }
 
         protected override void OnStart()

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PokemonBetting.Client"
+             x:Class="PokemonBetting.Client.AccountForm">
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+                iOS="20, 40, 20, 20"
+                Android="20, 20, 20, 20"
+                WinPhone="20, 20, 20, 20" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="FillAndExpand"
+                 HorizontalOptions="FillAndExpand"
+                 Orientation="Vertical"
+                 Spacing="15">
+      <Label Text="Enter a Phoneword:" />
+      <Entry x:Name="firstNameText" Text="Dominic" />
+      <Entry x:Name="lastNameText" Text="Sina" />
+      <Button x:Name="sendButton" Text="Send" Clicked="OnSend" />
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
