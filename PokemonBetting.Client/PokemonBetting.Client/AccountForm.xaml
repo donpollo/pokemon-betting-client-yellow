@@ -14,9 +14,15 @@
                  HorizontalOptions="FillAndExpand"
                  Orientation="Vertical"
                  Spacing="15">
-      <Label Text="Enter a Phoneword:" />
-      <Entry x:Name="firstNameText" Text="Dominic" />
-      <Entry x:Name="lastNameText" Text="Sina" />
+      <Label Text="Create new user:" />
+      <Entry x:Name="userNameText" Placeholder="your username" />
+      <Entry x:Name="eMailText" Placeholder="your email" >
+        <Entry.Behaviors>
+          <local:EmailValidatorBehaviour x:Name="emailValidator"/>
+        </Entry.Behaviors>
+      </Entry>
+      <Entry x:Name="passwordText" IsPassword="true" Placeholder="your password" />
+      <Entry x:Name="passwordCheckText" IsPassword="true" Placeholder="confirm password" />
       <Button x:Name="sendButton" Text="Send" Clicked="OnSend" />
     </StackLayout>
   </ContentPage.Content>

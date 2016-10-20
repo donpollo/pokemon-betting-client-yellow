@@ -5,17 +5,18 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-//using Newtonsoft.Json;
+using Newtonsoft.Json;
 
 using Xamarin.Forms;
 
 namespace PokemonBetting.Client
 {
 
-    public class Person
+    public class User
     {
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
+        public String UserName { get; set; }
+        public String EMail { get; set; }
+        public String Password { get; set; }
     }
 
     public partial class AccountForm : ContentPage
@@ -25,31 +26,23 @@ namespace PokemonBetting.Client
             InitializeComponent();
         }
 
-        Object toJason(Person p)
+        String AccountToJson(User a)
         {
-            //var json = JsonConvert.SerializeObject(p);
-            //return json;
-            return null;
+            var json = JsonConvert.SerializeObject(a);
+            return json;
         }
 
         async void OnSend(object sender, EventArgs e)
         {
-            Person p = new Person { FirstName = firstNameText.Text, LastName = lastNameText.Text };
+            User a = new User { UserName = userNameText.Text, Password = passwordText.Text ,EMail = eMailText.Text };
 
 
             HttpClient httpClient = new HttpClient();
             
             HttpResponseMessage response = await httpClient.GetAsync("https://blogs.msdn.microsoft.com/bclteam/p/httpclient/");
 
-            firstNameText.Text = response.StatusCode.ToString();
-            /*var client = new RestClient();
-            client.BaseUrl = new Uri("https://github.com");
-            var request = new RestRequest("/restsharp/RestSharp/wiki/Getting-Started", Method.GET);
-            //request.AddObject(toJason(p)); noting to add, Method.POST should be used
-            IRestResponse response = client.Execute(request);
-
-            firstNameText.Text = response.StatusCode.ToString();*/
-
+            //await DisplayAlert("HTTP response status", response.StatusCode.ToString(), "accept");
+            await DisplayAlert("You entered:","UserName: " +userNameText.Text+ " | Email: "+ eMailText.Text+" | Password: "+ passwordText.Text+" | PasswordConf: "+ passwordCheckText.Text, "accept");
         }
     }
 }
