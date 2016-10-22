@@ -17,7 +17,7 @@
                  HorizontalOptions="FillAndExpand"
                  Orientation="Vertical"
                  Spacing="15">
-      <Label Text="Create new user:" />
+      <Label Text="Create new user:" FontSize="Large"/>
       <Entry x:Name="userNameText" Text="{Binding Path=UserNameText}" Placeholder="your username" />
       <Entry x:Name="eMailText" Text="{Binding Path=EMailText}" Placeholder="your email" >
         <Entry.Behaviors>
@@ -29,7 +29,7 @@
 
       <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
         <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
-          <Button x:Name="backButton" Text="Back" Command="{Binding GoBackCommand}" />
+          <Button x:Name="backButton" Text="Back" Command="{Binding GoBackCommand}" />  
         </StackLayout>
         <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
           <Button x:Name="sendButton" Text="Send" Command="{Binding PostUserCommand}" />
