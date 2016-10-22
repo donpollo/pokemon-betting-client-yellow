@@ -5,6 +5,7 @@ using Prism.Services;
 using PokemonBetting.Client.Models;
 using FluentValidation;
 using System.Net.Http;
+using Prism.Navigation;
 
 namespace PokemonBetting.Client.ViewModels
 {
@@ -12,17 +13,26 @@ namespace PokemonBetting.Client.ViewModels
     {
         //these are the bindings used in the view
         public DelegateCommand PostUserCommand { get; set; }
+        public DelegateCommand GoBackCommand { get; set; }
         public string UserNameText { get; set; }
         public string EMailText { get; set; }
         public string PasswordText { get; set; }
         public string PasswordCheckText { get; set; }
 
         IPageDialogService _dialogService;
+        INavigationService _navigationService;
 
-        public UserFormViewModel(IPageDialogService dialogService)
+        public UserFormViewModel(IPageDialogService dialogService, INavigationService navigationService)
         {
+            _navigationService = navigationService;
             _dialogService = dialogService;
             PostUserCommand = new DelegateCommand(PostUser);
+            GoBackCommand = new DelegateCommand(GoBack);
+        }
+        
+        private async void GoBack()
+        {
+            await _navigationService.NavigateAsync("MainPage");
         }
 
         private async void PostUser()
@@ -33,6 +43,7 @@ namespace PokemonBetting.Client.ViewModels
                 HttpResponseMessage response = await httpClient.PostAsync("http://httpbin.org/post", user.ToJson() );
                 string responseString = await response.Content.ReadAsStringAsync();
                 await _dialogService.DisplayAlertAsync("HTTP response status: "+ response.StatusCode.ToString(), responseString, "accept");
+                await _navigationService.NavigateAsync("MainPage");
             }
             catch(ValidationException e)
             {

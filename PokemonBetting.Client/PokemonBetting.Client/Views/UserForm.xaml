@@ -26,7 +26,15 @@
       </Entry>
       <Entry x:Name="passwordText" Text="{Binding Path=PasswordText}" IsPassword="true" Placeholder="your password" />
       <Entry x:Name="passwordCheckText" Text="{Binding Path=PasswordCheckText}" IsPassword="true" Placeholder="confirm password" />
-      <Button x:Name="sendButton" Text="Send" Command="{Binding PostUserCommand}" />
+
+      <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
+        <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
+          <Button x:Name="backButton" Text="Back" Command="{Binding GoBackCommand}" />
+        </StackLayout>
+        <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
+          <Button x:Name="sendButton" Text="Send" Command="{Binding PostUserCommand}" />
+        </StackLayout>
+      </StackLayout>
     </StackLayout>
   </ContentPage.Content>
 </ContentPage>
