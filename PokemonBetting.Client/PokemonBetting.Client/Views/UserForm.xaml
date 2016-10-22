@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:PokemonBetting.Client.Views"
+             xmlns:behaviours="clr-namespace:PokemonBetting.Client.Helpers.Behaviours"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
                 prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="PokemonBetting.Client.Views.UserForm">
@@ -11,11 +12,6 @@
                 Android="20, 20, 20, 20"
                 WinPhone="20, 20, 20, 20" />
   </ContentPage.Padding>
-  <ContentPage.Resources>
-        <ResourceDictionary>
-            <local:BoolToImageConverter x:Key="boolToImgCon"></local:BoolToImageConverter>
-        </ResourceDictionary>
-  </ContentPage.Resources>
   <ContentPage.Content>
     <StackLayout VerticalOptions="FillAndExpand"
                  HorizontalOptions="FillAndExpand"
@@ -25,7 +21,7 @@
       <Entry x:Name="userNameText" Text="{Binding Path=UserNameText}" Placeholder="your username" />
       <Entry x:Name="eMailText" Text="{Binding Path=EMailText}" Placeholder="your email" >
         <Entry.Behaviors>
-          <local:EmailValidatorBehaviour x:Name="emailValidator"/>
+          <behaviours:EmailValidatorBehaviour x:Name="emailValidator"/>
         </Entry.Behaviors>
       </Entry>
       <Entry x:Name="passwordText" Text="{Binding Path=PasswordText}" IsPassword="true" Placeholder="your password" />
