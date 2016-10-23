@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace PokemonBetting.Client
+namespace PokemonBetting.Client.Views
 {
     public partial class MainPage : ContentPage
     {

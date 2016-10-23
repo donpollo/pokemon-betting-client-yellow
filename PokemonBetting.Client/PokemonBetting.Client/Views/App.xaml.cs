@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace PokemonBetting.Client
+namespace PokemonBetting.Client.Views
 {
     public partial class App : Application
     {
