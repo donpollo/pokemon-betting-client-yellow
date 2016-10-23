@@ -1,12 +1,10 @@
 ﻿//using PokemonBetting.Client.ViewModels;
 using PokemonBetting.Client.Views;
-using Prism.Modularity;
-using Prism.Mvvm;
 using Prism.Unity;
 
 namespace PokemonBetting.Client
 {
-    public class App : PrismApplication
+    public partial class App : PrismApplication
     {
         public App(IPlatformInitializer initializer = null) : base(initializer) { }
 
