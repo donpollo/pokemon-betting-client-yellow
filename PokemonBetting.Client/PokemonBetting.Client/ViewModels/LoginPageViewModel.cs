@@ -21,7 +21,7 @@ namespace PokemonBetting.Client.ViewModels
             IUnityContainer container)
         {
             _navigationService = navigationService;
-            _authProvider = container.Resolve<IAuthProvider>();
+            _authProvider = container.Resolve<IAuthProvider>("AuthProvider");
 
             LoginCommand = new DelegateCommand(Login);
             RegisterCommand = new DelegateCommand(Register);
@@ -36,9 +36,7 @@ namespace PokemonBetting.Client.ViewModels
         {
             await _authProvider.TryAuth(UserNameText, PasswordText);
             if (_authProvider.IsAuthenticated)
-            {
-                await _navigationService.NavigateAsync("MainPage");
-            }
+                await _navigationService.GoBackAsync(useModalNavigation: true);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace PokemonBetting.Client.Views
     {
         public LoginPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

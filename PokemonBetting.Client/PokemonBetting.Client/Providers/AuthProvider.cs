@@ -10,7 +10,7 @@ namespace PokemonBetting.Client.Providers
         public async Task TryAuth(string username, string password)
         {
             // TODO: Actual auth
-            await Task.Delay(TimeSpan.FromSeconds(5));
+            await Task.Delay(TimeSpan.FromSeconds(0.3));
             this.IsAuthenticated = true;
         }
     }

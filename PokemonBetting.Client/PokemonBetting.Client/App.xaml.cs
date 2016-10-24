@@ -13,24 +13,16 @@ namespace PokemonBetting.Client
 
         protected override void OnInitialized()
         {
-            NavigationService.NavigateAsync("LoginPage", animated: false);
-            //NavigationService.NavigateAsync("MyNavigationPage/MyTabbedPage", animated: false);
+            NavigationService.NavigateAsync("MainPage", animated: false);
         }
 
         protected override void RegisterTypes()
         {
-            //Container.RegisterTypeForNavigation<MainPage, SomeOtherViewModel>(); //override viewmodel convention[not sure what this is]
             Container.RegisterTypeForNavigation<LoginPage>();
             Container.RegisterTypeForNavigation<UserForm>();
             Container.RegisterTypeForNavigation<MainPage>();
 
             Container.RegisterInstance<IAuthProvider>("AuthProvider", new AuthProvider());
-        }
-
-        protected override void ConfigureModuleCatalog()
-        {
-            //ModuleCatalog.AddModule(new ModuleInfo(typeof(ModuleA.ModuleAModule)));
-            //ModuleCatalog.AddModule(new ModuleInfo("ModuleA", typeof(ModuleA.ModuleAModule), InitializationMode.OnDemand));
         }
     }
 }
