@@ -1,4 +1,7 @@
 ﻿//using PokemonBetting.Client.ViewModels;
+
+using Microsoft.Practices.Unity;
+using PokemonBetting.Client.Providers;
 using PokemonBetting.Client.Views;
 using Prism.Unity;
 
@@ -10,15 +13,18 @@ namespace PokemonBetting.Client
 
         protected override void OnInitialized()
         {
-            NavigationService.NavigateAsync("UserForm", animated: false);
+            NavigationService.NavigateAsync("LoginPage", animated: false);
             //NavigationService.NavigateAsync("MyNavigationPage/MyTabbedPage", animated: false);
         }
 
         protected override void RegisterTypes()
         {
             //Container.RegisterTypeForNavigation<MainPage, SomeOtherViewModel>(); //override viewmodel convention[not sure what this is]
+            Container.RegisterTypeForNavigation<LoginPage>();
             Container.RegisterTypeForNavigation<UserForm>();
             Container.RegisterTypeForNavigation<MainPage>();
+
+            Container.RegisterInstance<IAuthProvider>("AuthProvider", new AuthProvider());
         }
 
         protected override void ConfigureModuleCatalog()

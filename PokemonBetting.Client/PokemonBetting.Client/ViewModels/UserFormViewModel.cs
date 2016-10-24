@@ -32,7 +32,7 @@ namespace PokemonBetting.Client.ViewModels
         
         private async void GoBack()
         {
-            await _navigationService.NavigateAsync("MainPage");
+            await _navigationService.GoBackAsync();
         }
 
         private async void PostUser()
@@ -43,7 +43,8 @@ namespace PokemonBetting.Client.ViewModels
                 HttpResponseMessage response = await httpClient.PostAsync("http://httpbin.org/post", user.ToJson() );
                 string responseString = await response.Content.ReadAsStringAsync();
                 await _dialogService.DisplayAlertAsync("HTTP response status: "+ response.StatusCode.ToString(), responseString, "accept");
-                await _navigationService.NavigateAsync("MainPage");
+
+                await _navigationService.GoBackAsync();
             }
             catch(ValidationException e)
             {
