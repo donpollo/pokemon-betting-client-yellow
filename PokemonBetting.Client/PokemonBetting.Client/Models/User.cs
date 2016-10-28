@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using PokemonBetting.Client.Helpers;
 
 namespace PokemonBetting.Client.Models
 {
@@ -30,7 +31,7 @@ namespace PokemonBetting.Client.Models
         //Use this to convert a user to json and send it to the server
         public StringContent ToJson()
         {
-            var json = JsonConvert.SerializeObject(this);
+            var json = LowerCaseSerializer.SerializeObject(this);
             return new StringContent(json, Encoding.UTF8, "application/json");
         }
     }
