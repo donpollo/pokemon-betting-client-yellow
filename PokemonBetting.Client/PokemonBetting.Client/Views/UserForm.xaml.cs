@@ -2,8 +2,6 @@
 
 namespace PokemonBetting.Client.Views
 {
-
-    
     public partial class UserForm : ContentPage
     {
         public UserForm()

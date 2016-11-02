@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PokemonBetting.Client.ViewModels;
 using Xamarin.Forms;
 
 namespace PokemonBetting.Client.Views
@@ -12,6 +8,13 @@ namespace PokemonBetting.Client.Views
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            (BindingContext as MainPageViewModel)?.EnsureAuthenticated();
         }
     }
 }
