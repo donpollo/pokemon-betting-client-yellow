@@ -21,6 +21,7 @@ namespace PokemonBetting.Client
             Container.RegisterTypeForNavigation<LoginPage>();
             Container.RegisterTypeForNavigation<UserForm>();
             Container.RegisterTypeForNavigation<MainPage>();
+            Container.RegisterTypeForNavigation<UserDisplayPage>();
 
             Container.RegisterInstance<IAuthProvider>("AuthProvider", new AuthProvider());
         }

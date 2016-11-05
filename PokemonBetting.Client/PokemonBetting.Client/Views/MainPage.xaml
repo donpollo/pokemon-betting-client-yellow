@@ -4,9 +4,12 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="PokemonBetting.Client.Views.MainPage">
-
-  <Label Text="I CAN HAZ POKEMONS"
-           VerticalOptions="Center"
-           HorizontalOptions="Center" />
-
+  <StackLayout VerticalOptions="Start"
+                 Orientation="Vertical">
+    <Label Text="I CAN HAZ POKEMONS"
+             VerticalOptions="Center"
+             HorizontalOptions="Center" />
+    <Button Text="User Display Page"
+                  Command="{Binding UserDisplayPageCommand}"/>
+  </StackLayout>
 </ContentPage>

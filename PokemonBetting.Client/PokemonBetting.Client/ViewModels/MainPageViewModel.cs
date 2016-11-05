@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 using PokemonBetting.Client.Providers;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 
@@ -7,6 +8,8 @@ namespace PokemonBetting.Client.ViewModels
 {
     public class MainPageViewModel : BindableBase
     {
+        public DelegateCommand UserDisplayPageCommand { get; private set; }
+
         private readonly INavigationService _navigationService;
         private readonly IAuthProvider _authProvider;
 
@@ -15,6 +18,8 @@ namespace PokemonBetting.Client.ViewModels
         {
             _authProvider = container.Resolve<IAuthProvider>("AuthProvider");
             _navigationService = navigationService;
+
+            UserDisplayPageCommand = new DelegateCommand(UserDisplayPage);
         }
 
         public void EnsureAuthenticated()
@@ -23,6 +28,11 @@ namespace PokemonBetting.Client.ViewModels
                 return;
 
             _navigationService.NavigateAsync("LoginPage", useModalNavigation: true);
+        }
+
+        private async void UserDisplayPage()
+        {
+            await _navigationService.NavigateAsync(nameof(UserDisplayPage), useModalNavigation: true);
         }
     }
 }
