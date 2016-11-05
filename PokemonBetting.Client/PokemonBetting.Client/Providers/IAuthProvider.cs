@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using PokemonBetting.Client.Models;
 
 namespace PokemonBetting.Client.Providers
 {
@@ -10,10 +11,21 @@ namespace PokemonBetting.Client.Providers
         bool IsAuthenticated { get; }
 
         /// <summary>
+        /// Returns the authentication token of a current user.
+        /// </summary>
+        string AuthToken { get; }
+
+        /// <summary>
         /// Asynchronously try to authenticate.
         /// </summary>
-        /// <param name="username">Username.</param>
-        /// <param name="password">Password.</param>
-        Task TryAuth(string username, string password);
+        /// <param name="userLogin">User login data.</param>
+        Task<AuthResultEnum> TryAuth(UserLogin userLogin);
+    }
+
+    public enum AuthResultEnum
+    {
+        Ok,
+        IncorrectCredentials,
+        UnknownError
     }
 }

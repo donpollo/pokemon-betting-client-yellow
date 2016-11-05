@@ -1,8 +1,13 @@
-﻿using PokemonBetting.Client.Providers;
+﻿using System;
+using System.Linq;
+using FluentValidation;
+using PokemonBetting.Client.Providers;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Microsoft.Practices.Unity;
+using PokemonBetting.Client.Helpers;
+using PokemonBetting.Client.Models;
 
 namespace PokemonBetting.Client.ViewModels
 {
@@ -16,6 +21,10 @@ namespace PokemonBetting.Client.ViewModels
 
         private readonly INavigationService _navigationService;
         private readonly IAuthProvider _authProvider;
+
+        public delegate void AlertEventHandler(object sender, AlertEventArgs e);
+
+        public event AlertEventHandler AlertEvent;
 
         public LoginPageViewModel(INavigationService navigationService,
             IUnityContainer container)
@@ -34,9 +43,35 @@ namespace PokemonBetting.Client.ViewModels
 
         private async void Login()
         {
-            await _authProvider.TryAuth(UserNameText, PasswordText);
-            if (_authProvider.IsAuthenticated)
-                await _navigationService.GoBackAsync(useModalNavigation: true);
+            UserLogin userLogin;
+            try
+            {
+                userLogin = new UserLogin(UserNameText, PasswordText);
+            }
+            catch (ValidationException e)
+            {
+                AlertEvent?.Invoke(this, new AlertEventArgs(
+                    "Alert", e.Errors.First().ErrorMessage));
+                return;
+            }
+
+            var authResult = await _authProvider.TryAuth(userLogin);
+            switch (authResult)
+            {
+                case AuthResultEnum.Ok:
+                    await _navigationService.GoBackAsync(useModalNavigation: true);
+                    return;
+                case AuthResultEnum.IncorrectCredentials:
+                    AlertEvent?.Invoke(this, new AlertEventArgs(
+                        "Alert", "The login attempt was unsuccessful. Check if the username and password are correct."));
+                    return;
+                case AuthResultEnum.UnknownError:
+                    AlertEvent?.Invoke(this, new AlertEventArgs(
+                        "Alert", "The login attempt was unsuccessful. Please try again."));
+                    return;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
