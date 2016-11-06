@@ -1,10 +1,15 @@
-﻿using Prism.Commands;
+﻿using System;
+using System.Linq;
+using Prism.Commands;
 using Prism.Mvvm;
 
 using Prism.Services;
 using PokemonBetting.Client.Models;
 using FluentValidation;
 using System.Net.Http;
+using Microsoft.Practices.Unity;
+using PokemonBetting.Client.Backend;
+using PokemonBetting.Client.Backend.CallResults;
 using Prism.Navigation;
 
 namespace PokemonBetting.Client.ViewModels
@@ -19,15 +24,19 @@ namespace PokemonBetting.Client.ViewModels
         public string PasswordText { get; set; }
         public string PasswordCheckText { get; set; }
 
-        IPageDialogService _dialogService;
-        INavigationService _navigationService;
+        private readonly IPageDialogService _dialogService;
+        private readonly INavigationService _navigationService;
+        private IBackendClient _backendClient;
 
-        public UserFormViewModel(IPageDialogService dialogService, INavigationService navigationService)
+        public UserFormViewModel(IPageDialogService dialogService,
+            INavigationService navigationService, IUnityContainer container)
         {
             _navigationService = navigationService;
             _dialogService = dialogService;
             PostUserCommand = new DelegateCommand(PostUser);
             GoBackCommand = new DelegateCommand(GoBack);
+
+            _backendClient = container.Resolve<IBackendClient>("BackendClient");
         }
         
         private async void GoBack()
@@ -37,24 +46,29 @@ namespace PokemonBetting.Client.ViewModels
 
         private async void PostUser()
         {
-            try {
-                User user = new User(this.UserNameText, this.EMailText, this.PasswordText, this.PasswordCheckText);
-                HttpClient httpClient = new HttpClient();
-                HttpResponseMessage response = await httpClient.PostAsync("http://httpbin.org/post", user.ToJson() );
-                string responseString = await response.Content.ReadAsStringAsync();
-                await _dialogService.DisplayAlertAsync("HTTP response status: "+ response.StatusCode.ToString(), responseString, "accept");
-
-                await _navigationService.GoBackAsync();
-            }
-            catch(ValidationException e)
+            User user;
+            try
             {
-                string errorString="";
-                foreach (var failure in e.Errors)
-                {
-                    errorString = failure.ToString() + "\n";
-                }
+                user = new User(UserNameText, EMailText, PasswordText, PasswordCheckText);
+            }
+            catch (ValidationException e)
+            {
+                await _dialogService.DisplayAlertAsync("Alert", e.Errors.First().ErrorMessage, "OK");
+                return;
+            }
 
-                await _dialogService.DisplayAlertAsync("Invalid input:", errorString, "back");
+            var createUserResult = await _backendClient.CreateUser(user);
+            switch (createUserResult.CreateUserResult)
+            {
+                case CreateUserCallResult.CreateUserResultEnum.Ok:
+                    await _navigationService.GoBackAsync(useModalNavigation: true);
+                    return;
+                case CreateUserCallResult.CreateUserResultEnum.UnknownError:
+                    await _dialogService.DisplayAlertAsync("Alert",
+                        "Couldn't create a user. Please try again.", "OK");
+                    return;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

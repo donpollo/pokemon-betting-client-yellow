@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using PokemonBetting.Client.Backend;
-using PokemonBetting.Client.Backend.Models;
+using PokemonBetting.Client.Backend.CallResults;
 using PokemonBetting.Client.Models;
 using PropertyChanged;
 
-namespace PokemonBetting.Client.Providers
+namespace PokemonBetting.Client.Backend
 {
     [ImplementPropertyChanged]
     public class AuthProvider : IAuthProvider

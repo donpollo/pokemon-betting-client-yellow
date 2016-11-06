@@ -2,9 +2,8 @@
 using System.Net;
 using System.Threading.Tasks;
 using PokemonBetting.Client.Models;
-using PokemonBetting.Client.Providers;
 using System.Net.Http;
-using PokemonBetting.Client.Backend.Models;
+using PokemonBetting.Client.Backend.CallResults;
 
 namespace PokemonBetting.Client.Backend
 {
@@ -43,6 +42,23 @@ namespace PokemonBetting.Client.Backend
 
             var responseString = await response.Content.ReadAsStringAsync();
             return new LoginCallResult(responseString);
+        }
+
+        public async Task<CreateUserCallResult> CreateUser(User userData)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.PostAsync("users", userData.ToJson());
+            }
+            catch (Exception)
+            {
+                return new CreateUserCallResult(CreateUserCallResult.CreateUserResultEnum.UnknownError);
+            }
+
+            return !response.IsSuccessStatusCode
+                ? new CreateUserCallResult(CreateUserCallResult.CreateUserResultEnum.UnknownError)
+                : new CreateUserCallResult(CreateUserCallResult.CreateUserResultEnum.Ok);
         }
     }
 }

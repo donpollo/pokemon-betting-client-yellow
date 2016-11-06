@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using PokemonBetting.Client.Models;
 
-namespace PokemonBetting.Client.Providers
+namespace PokemonBetting.Client.Backend
 {
     public interface IAuthProvider
     {

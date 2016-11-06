@@ -1,4 +1,4 @@
-﻿namespace PokemonBetting.Client.Backend.Models
+﻿namespace PokemonBetting.Client.Backend.CallResults
 {
     public class LoginCallResult
     {

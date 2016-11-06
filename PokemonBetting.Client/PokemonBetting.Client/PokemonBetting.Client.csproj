@@ -36,9 +36,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Backend\BackendClient.cs" />
+    <Compile Include="Backend\CallResults\CreateUserCallResult.cs" />
     <Compile Include="Backend\IBackendClient.cs" />
-    <Compile Include="Backend\Models\LoginCallResult.cs" />
-    <Compile Include="Helpers\AlertEventArgs.cs" />
+    <Compile Include="Backend\CallResults\LoginCallResult.cs" />
     <Compile Include="Helpers\LowerCaseSerializer.cs" />
     <Compile Include="Helpers\Behaviours\EntryLengthValidatorBehavior.cs" />
     <Compile Include="Models\User.cs" />
@@ -60,8 +60,8 @@
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\AuthProvider.cs" />
-    <Compile Include="Providers\IAuthProvider.cs" />
+    <Compile Include="Backend\AuthProvider.cs" />
+    <Compile Include="Backend\IAuthProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\MainPage.xaml">
@@ -144,7 +144,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Backend\Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.152-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.152-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
