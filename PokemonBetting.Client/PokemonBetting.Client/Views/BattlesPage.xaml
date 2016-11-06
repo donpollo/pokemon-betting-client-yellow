@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:selectors="clr-namespace:PokemonBetting.Client.Helpers.DataTemplateSelectors"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="PokemonBetting.Client.Views.BattlesPage">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <DataTemplate x:Key="noWinnerTemplate">
+        <ViewCell>
+          <Grid>
+            <Label Text="{Binding Team1.Trainer.Name}" />
+            <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+          </Grid>
+        </ViewCell>
+      </DataTemplate>
+      <DataTemplate x:Key="team1WinnerTemplate">
+        <ViewCell>
+          <Grid>
+            <Label Text="{Binding Team1.Trainer.Name}" TextColor="Red" />
+            <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+          </Grid>
+        </ViewCell>
+      </DataTemplate>
+      <DataTemplate x:Key="team2WinnerTemplate">
+        <ViewCell>
+          <Grid>
+            <Label Text="{Binding Team1.Trainer.Name}" />
+            <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+            <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" TextColor="Red" HorizontalTextAlignment="End"/>
+          </Grid>
+        </ViewCell>
+      </DataTemplate>
+      <selectors:WinnerDataTemplateSelector x:Key="winnerDataTemplateSelector"
+        NoWinnerTemplate="{StaticResource noWinnerTemplate}"
+        Team1WinnerTemplate="{StaticResource team1WinnerTemplate}"
+        Team2WinnerTemplate="{StaticResource team2WinnerTemplate}" />
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+                iOS="20, 40, 20, 20"
+                Android="20, 20, 20, 20"
+                WinPhone="20, 20, 20, 20" />
+  </ContentPage.Padding>
+  <ContentPage.Content>
+    <StackLayout VerticalOptions="FillAndExpand"
+                 HorizontalOptions="FillAndExpand"
+                 Orientation="Vertical"
+                 Spacing="15">
+      <Label Text="Finished Battles" FontSize="Large"/>
+      <ListView x:Name="BattlesView" ItemsSource="{Binding Battles}" ItemTemplate="{StaticResource winnerDataTemplateSelector}"/>
+    
+      <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
+        <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
+          <Button x:Name="previousButton" Text="Previous" Command="{Binding PreviousCommand}" />  
+        </StackLayout>
+        <Label Text="{Binding PageNumber}" FontSize="Large" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
+          <Button x:Name="nextButton" Text="Next" Command="{Binding NextCommand}" />
+        </StackLayout>
+      </StackLayout>
+      <Button x:Name="backButton" Text="Back" Command="{Binding GoBackCommand}" />
+    </StackLayout>  
+  </ContentPage.Content>
+</ContentPage>
