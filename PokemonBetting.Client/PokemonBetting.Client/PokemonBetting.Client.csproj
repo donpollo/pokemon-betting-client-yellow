@@ -35,9 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DataTemplateSelectors\WinnerDataTemplateSelector.cs" />
+    <Compile Include="Models\Battle.cs" />
+    <Compile Include="Models\Team.cs" />
+    <Compile Include="Models\Trainer.cs" />
+    <Compile Include="Models\Winner.cs" />
+    <Compile Include="Views\BattlesPage.xaml.cs">
+      <DependentUpon>BattlesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\LowerCaseSerializer.cs" />
     <Compile Include="Helpers\Behaviours\EntryLengthValidatorBehavior.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="ViewModels\BattlesPageViewModel.cs" />
     <Compile Include="ViewModels\LoginPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\UserFormViewModel.cs" />
@@ -144,7 +153,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BattlesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.152-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.152-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
