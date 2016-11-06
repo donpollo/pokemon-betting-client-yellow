@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="PokemonBetting.Client.Views.UserDisplayPage">
+  <StackLayout VerticalOptions="Start"
+              Orientation="Vertical">
+      
+    <Label Text="User Display"
+            FontSize="Large"/>
+      
+    <Label Text="Name" />
+    <Entry Text="{Binding User.UserName}"
+            Placeholder="Username"
+            IsEnabled="false">
+    </Entry>
+      
+    <Label Text="Email" />
+    <Entry Text="{Binding User.EMail}"
+            Placeholder="Email"
+            IsEnabled="false">
+    </Entry>
+    
+    <Button Text="Back to main page"
+            Command="{Binding MainPageCommand}"/>
+      
+  </StackLayout>
+</ContentPage>

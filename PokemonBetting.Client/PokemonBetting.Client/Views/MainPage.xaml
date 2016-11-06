@@ -4,13 +4,9 @@
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="PokemonBetting.Client.Views.MainPage">
-  <StackLayout Orientation="Vertical">
-    <Label Text="I CAN HAZ POKEMONS"
-           VerticalOptions="Center"
-           HorizontalOptions="Center" />
-    
-    <Label Text="{Binding AuthProvider.AuthToken}"
-           TextColor="Red"
-           IsVisible="{Binding AuthProvider.IsAuthenticated}"/>
+  <StackLayout VerticalOptions="Start"
+                 Orientation="Vertical">
+    <Button Text="User Display Page"
+                  Command="{Binding UserDisplayPageCommand}"/>
   </StackLayout>
 </ContentPage>
