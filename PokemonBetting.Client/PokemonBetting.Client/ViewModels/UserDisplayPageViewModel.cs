@@ -1,6 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
+using PokemonBetting.Client.Backend;
 using PokemonBetting.Client.Models;
-using PokemonBetting.Client.Providers;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
