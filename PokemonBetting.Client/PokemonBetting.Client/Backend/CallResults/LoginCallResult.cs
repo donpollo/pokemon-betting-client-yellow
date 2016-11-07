@@ -2,7 +2,6 @@
 {
     public class LoginCallResult
     {
-
         public LoginCallResult(LoginResultEnum loginResult)
         {
             LoginResult = loginResult;

@@ -1,11 +1,8 @@
-﻿using System.Net.Http;
-using System.Text;
-using FluentValidation;
-using PokemonBetting.Client.Helpers;
+﻿using FluentValidation;
 
 namespace PokemonBetting.Client.Models
 {
-    public class UserLogin
+    public class UserLogin : ModelBase<UserLogin>
     {
         public UserLogin(string username, string password)
         {
@@ -19,13 +16,6 @@ namespace PokemonBetting.Client.Models
         public string Username { get; }
 
         public string Password { get; }
-
-        //Use this to convert a user to json and send it to the server
-        public StringContent ToJson()
-        {
-            var json = LowerCaseSerializer.SerializeObject(this);
-            return new StringContent(json, Encoding.UTF8, "application/json");
-        }
 
         private class UserLoginValidator : AbstractValidator<UserLogin>
         {

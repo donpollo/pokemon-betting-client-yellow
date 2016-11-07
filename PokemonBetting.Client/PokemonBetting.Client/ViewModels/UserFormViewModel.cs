@@ -46,10 +46,10 @@ namespace PokemonBetting.Client.ViewModels
 
         private async void PostUser()
         {
-            User user;
+            NewUser user;
             try
             {
-                user = new User(UserNameText, EMailText, PasswordText, PasswordCheckText);
+                user = new NewUser(UserNameText, EMailText, PasswordText, PasswordCheckText);
             }
             catch (ValidationException e)
             {

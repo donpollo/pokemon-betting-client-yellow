@@ -8,6 +8,8 @@ namespace PokemonBetting.Client.Backend
     {
         Task<LoginCallResult> Login(UserLogin userLogin);
 
-        Task<CreateUserCallResult> CreateUser(User userData);
+        Task<CreateUserCallResult> CreateUser(NewUser userData);
+
+        Task<GetAuthenticatedUserCallResult> GetAuthenticatedUser();
     }
 }

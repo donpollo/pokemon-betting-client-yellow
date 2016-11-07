@@ -18,7 +18,11 @@ namespace PokemonBetting.Client.Backend
         {
             _authProvider = authProvider;
 
-            _httpClient = new HttpClient { BaseAddress = new Uri(baseAddress) };
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(baseAddress),
+                Timeout = TimeSpan.FromSeconds(15)
+            };
         }
 
         public async Task<LoginCallResult> Login(UserLogin userLogin)
@@ -44,7 +48,7 @@ namespace PokemonBetting.Client.Backend
             return new LoginCallResult(responseString);
         }
 
-        public async Task<CreateUserCallResult> CreateUser(User userData)
+        public async Task<CreateUserCallResult> CreateUser(NewUser userData)
         {
             HttpResponseMessage response;
             try
@@ -56,9 +60,30 @@ namespace PokemonBetting.Client.Backend
                 return new CreateUserCallResult(CreateUserCallResult.CreateUserResultEnum.UnknownError);
             }
 
-            return !response.IsSuccessStatusCode
-                ? new CreateUserCallResult(CreateUserCallResult.CreateUserResultEnum.UnknownError)
-                : new CreateUserCallResult(CreateUserCallResult.CreateUserResultEnum.Ok);
+            if (!response.IsSuccessStatusCode)
+                return new CreateUserCallResult(CreateUserCallResult.CreateUserResultEnum.UnknownError);
+
+            return new CreateUserCallResult(CreateUserCallResult.CreateUserResultEnum.Ok);
+        }
+
+        public async Task<GetAuthenticatedUserCallResult> GetAuthenticatedUser()
+        {
+            if (!_authProvider.IsAuthenticated)
+                throw new Exception("User is not authenticated.");
+
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.GetAsync("users/me");
+            }
+            catch (Exception)
+            {
+                return new GetAuthenticatedUserCallResult(GetAuthenticatedUserCallResult.GetAuthenticatedUserResultEnum.UnknownError);
+            }
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            var user = User.FromJson(responseString);
+            return new GetAuthenticatedUserCallResult(user);
         }
     }
 }

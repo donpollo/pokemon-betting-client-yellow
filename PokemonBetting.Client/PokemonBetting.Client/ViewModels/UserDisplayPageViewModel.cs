@@ -7,7 +7,7 @@ using Prism.Navigation;
 
 namespace PokemonBetting.Client.ViewModels
 {
-    public class UserDisplayPageViewModel : BindableBase
+    public class UserDisplayPageViewModel : BindableBase, INavigationAware
     {
         public DelegateCommand MainPageCommand { get; private set; }
         public User User { get; private set; }
@@ -22,14 +22,20 @@ namespace PokemonBetting.Client.ViewModels
             _authProvider = container.Resolve<IAuthProvider>("AuthProvider");
 
             MainPageCommand = new DelegateCommand(MainPage);
-
-            // TODO Get actual user with api call
-            User = new User("Garry Host", "garry@host.com", "pw", "pw");
         }
 
         private async void MainPage()
         {
-            await _navigationService.NavigateAsync(nameof(MainPage), useModalNavigation: true);
+            await _navigationService.GoBackAsync();
+        }
+
+        public void OnNavigatedFrom(NavigationParameters parameters)
+        {
+        }
+
+        public void OnNavigatedTo(NavigationParameters parameters)
+        {
+            User = parameters["Model"] as User;
         }
     }
 }
