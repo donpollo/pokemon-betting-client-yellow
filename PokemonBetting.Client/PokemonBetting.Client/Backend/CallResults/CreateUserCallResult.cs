@@ -1,13 +1,9 @@
 ﻿namespace PokemonBetting.Client.Backend.CallResults
 {
-    public class CreateUserCallResult
+    public class CreateUserCallResult :
+        GenericCallResult<CreateUserCallResult.CreateUserResultEnum>
     {
-        public CreateUserCallResult(CreateUserResultEnum createUserResult)
-        {
-            CreateUserResult = createUserResult;
-        }
-
-        public CreateUserResultEnum CreateUserResult { get; }
+        public CreateUserCallResult(CreateUserResultEnum result) : base(result) { }
 
         public enum CreateUserResultEnum
         {

@@ -1,19 +1,15 @@
 ﻿namespace PokemonBetting.Client.Backend.CallResults
 {
-    public class LoginCallResult
+    public class LoginCallResult :
+        GenericCallResult<LoginCallResult.LoginResultEnum>
     {
-        public LoginCallResult(LoginResultEnum loginResult)
-        {
-            LoginResult = loginResult;
-        }
+        public LoginCallResult(LoginResultEnum loginResult) : base(loginResult) { }
 
         public LoginCallResult(string authToken)
-            : this(LoginResultEnum.Ok)
+            : base(LoginResultEnum.Ok)
         {
             AuthToken = authToken;
         }
-
-        public LoginResultEnum LoginResult { get; }
 
         public string AuthToken { get; }
 

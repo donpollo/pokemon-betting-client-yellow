@@ -24,7 +24,7 @@ namespace PokemonBetting.Client.Backend
         public async Task<AuthResultEnum> TryAuth(UserLogin userLogin)
         {
             var result = await _backendClient.Login(userLogin);
-            switch (result.LoginResult)
+            switch (result.Result)
             {
                 case LoginCallResult.LoginResultEnum.Ok:
                     AuthToken = result.AuthToken;

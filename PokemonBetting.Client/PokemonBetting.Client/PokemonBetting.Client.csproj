@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Backend\BackendClient.cs" />
     <Compile Include="Backend\CallResults\CreateUserCallResult.cs" />
+    <Compile Include="Backend\CallResults\GenericCallResult.cs" />
     <Compile Include="Backend\CallResults\GetAuthenticatedUserCallResult.cs" />
     <Compile Include="Backend\IBackendClient.cs" />
     <Compile Include="Backend\CallResults\LoginCallResult.cs" />

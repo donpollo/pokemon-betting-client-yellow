@@ -58,7 +58,7 @@ namespace PokemonBetting.Client.ViewModels
             }
 
             var createUserResult = await _backendClient.CreateUser(user);
-            switch (createUserResult.CreateUserResult)
+            switch (createUserResult.Result)
             {
                 case CreateUserCallResult.CreateUserResultEnum.Ok:
                     await _navigationService.GoBackAsync(useModalNavigation: true);

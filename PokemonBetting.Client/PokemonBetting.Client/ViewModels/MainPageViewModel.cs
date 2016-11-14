@@ -47,7 +47,7 @@ namespace PokemonBetting.Client.ViewModels
             }
 
             var userDataResult = await _backendClient.GetAuthenticatedUser();
-            switch (userDataResult.GetAuthenticatedUserResult)
+            switch (userDataResult.Result)
             {
                 case GetAuthenticatedUserCallResult.GetAuthenticatedUserResultEnum.Ok:
                     var navigationParameters = new NavigationParameters {["Model"] = userDataResult.User};
