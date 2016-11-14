@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using PokemonBetting.Client.Models;
 
 namespace PokemonBetting.Client.Backend
 {
-    public interface IAuthProvider
+    public interface IAuthProvider : INotifyPropertyChanged
     {
         /// <summary>
         /// Returns the authentication status of a current user.

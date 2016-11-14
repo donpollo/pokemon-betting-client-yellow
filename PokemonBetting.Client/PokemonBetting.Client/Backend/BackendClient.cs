@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Net;
 using System.Threading.Tasks;
 using PokemonBetting.Client.Models;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using PokemonBetting.Client.Backend.CallResults;
 
 namespace PokemonBetting.Client.Backend
@@ -17,12 +19,25 @@ namespace PokemonBetting.Client.Backend
             string baseAddress)
         {
             _authProvider = authProvider;
+            if (authProvider != null)
+                authProvider.PropertyChanged += AuthProviderOnPropertyChanged;
 
             _httpClient = new HttpClient
             {
                 BaseAddress = new Uri(baseAddress),
                 Timeout = TimeSpan.FromSeconds(15)
             };
+        }
+
+        private void AuthProviderOnPropertyChanged(object sender,
+            PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == _authProvider.AuthToken)
+            {
+                var newToken = _authProvider.AuthToken;
+                this._httpClient.DefaultRequestHeaders.Authorization = newToken == null ? null :
+                    new AuthenticationHeaderValue("Bearer", _authProvider.AuthToken);
+            }
         }
 
         public async Task<LoginCallResult> Login(UserLogin userLogin)

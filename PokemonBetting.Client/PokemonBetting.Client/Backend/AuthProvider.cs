@@ -2,12 +2,13 @@
 using System.Threading.Tasks;
 using PokemonBetting.Client.Backend.CallResults;
 using PokemonBetting.Client.Models;
+using Prism.Mvvm;
 using PropertyChanged;
 
 namespace PokemonBetting.Client.Backend
 {
     [ImplementPropertyChanged]
-    public class AuthProvider : IAuthProvider
+    public class AuthProvider : BindableBase, IAuthProvider
     {
         private readonly IBackendClient _backendClient;
 
