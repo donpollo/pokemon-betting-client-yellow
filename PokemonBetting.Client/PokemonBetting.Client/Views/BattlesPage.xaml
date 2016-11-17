@@ -51,7 +51,6 @@
                  HorizontalOptions="FillAndExpand"
                  Orientation="Vertical"
                  Spacing="15">
-      <Label Text="Finished Battles" FontSize="Large"/>
       <ListView x:Name="BattlesView" ItemsSource="{Binding Battles}" ItemTemplate="{StaticResource winnerDataTemplateSelector}"/>
     
       <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">

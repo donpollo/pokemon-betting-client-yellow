@@ -41,8 +41,8 @@
     <Compile Include="Backend\CallResults\GetAuthenticatedUserCallResult.cs" />
     <Compile Include="Backend\IBackendClient.cs" />
     <Compile Include="Backend\CallResults\LoginCallResult.cs" />
-    <Compile Include="Views\BattlesTabPage.xaml.cs">
-      <DependentUpon>BattlesTabPage.xaml</DependentUpon>
+    <Compile Include="Views\TabbedBattlesPage.xaml.cs">
+      <DependentUpon>TabbedBattlesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataTemplateSelectors\WinnerDataTemplateSelector.cs" />
     <Compile Include="Models\Battle.cs" />
@@ -52,7 +52,7 @@
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Winner.cs" />
-    <Compile Include="ViewModels\BattlesTabPageViewModel.cs" />
+    <Compile Include="ViewModels\TabbedBattlesPageViewModel.cs" />
     <Compile Include="Views\BattlesPage.xaml.cs">
       <DependentUpon>BattlesPage.xaml</DependentUpon>
     </Compile>
@@ -187,7 +187,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\BattlesTabPage.xaml">
+    <EmbeddedResource Include="Views\TabbedBattlesPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

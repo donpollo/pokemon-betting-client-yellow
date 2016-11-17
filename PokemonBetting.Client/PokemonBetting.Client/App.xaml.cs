@@ -16,7 +16,7 @@ namespace PokemonBetting.Client
         protected override void OnInitialized()
         {
 			//NavigationService.NavigateAsync("MainPage", animated: false);
-			NavigationService.NavigateAsync("BattlesPage", animated: false);
+			NavigationService.NavigateAsync("TabbedBattlesPage", animated: false);
 		}
 
         protected override void RegisterTypes()
@@ -31,7 +31,7 @@ namespace PokemonBetting.Client
             Container.RegisterInstance<IBackendClient>("BackendClient",
                  new BackendClient(authProvider, BaseAddress));
 
-			Container.RegisterTypeForNavigation<BattlesTabPage>();
+			Container.RegisterTypeForNavigation<TabbedBattlesPage>();
 			Container.RegisterTypeForNavigation<BattlesPage>();
 		}
     }
