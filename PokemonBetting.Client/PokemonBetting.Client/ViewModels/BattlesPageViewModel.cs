@@ -69,7 +69,7 @@ namespace PokemonBetting.Client.ViewModels
         {
             HttpClient httpClient = new HttpClient();
             //HttpResponseMessage response = await httpClient.GetAsync(("http://pokemon-battle.bid/api/v1/battles/?limit="+limit+"&offset="+offset+"&is_finished=true"));
-            HttpResponseMessage response = await httpClient.GetAsync("http://163.172.151.151:5000/battles/?limit=" + limit + "&offset=" + offset + "&is_finished=true");
+            HttpResponseMessage response = await httpClient.GetAsync("http://163.172.151.151:5000/battles/limit=" + limit + "&offset=" + offset + "&is_finished=true");
 
             string responseString = await response.Content.ReadAsStringAsync();
             JArray jArray = JArray.Parse(responseString);
