@@ -24,8 +24,9 @@ namespace PokemonBetting.Client.ViewModels
         public DelegateCommand GoBackCommand { get; set; }
 
         public int PageNumber { get { return offset / limit; } }
-        private int offset = 0;
-        private int limit = 10;
+		protected int offset = 0;
+		protected int limit = 10;
+		protected bool isFinished=true;
 
 
         public BattlesPageViewModel(INavigationService navigationService)
@@ -41,14 +42,14 @@ namespace PokemonBetting.Client.ViewModels
             getBattles();
         }
 
-        private void nextBattles()
+		protected void nextBattles()
         {
             offset += limit;
             OnPropertyChanged("PageNumber");
             getBattles();
         }
 
-        private void previousBattles()
+		protected void previousBattles()
         {
             offset -= limit;
             if (offset < 0)
@@ -59,17 +60,17 @@ namespace PokemonBetting.Client.ViewModels
             getBattles();
         }
 
-        private async void GoBack()
+		protected async void GoBack()
         {
             await _navigationService.GoBackAsync();
         }
 
 
-        private async void getBattles()
+        protected async void getBattles()
         {
             HttpClient httpClient = new HttpClient();
             //HttpResponseMessage response = await httpClient.GetAsync(("http://pokemon-battle.bid/api/v1/battles/?limit="+limit+"&offset="+offset+"&is_finished=true"));
-            HttpResponseMessage response = await httpClient.GetAsync("http://163.172.151.151:5000/battles/limit=" + limit + "&offset=" + offset + "&is_finished=true");
+            HttpResponseMessage response = await httpClient.GetAsync("http://163.172.151.151:5000/battles/limit=" + limit + "&offset=" + offset + "&is_finished="+isFinished);
 
             string responseString = await response.Content.ReadAsStringAsync();
             JArray jArray = JArray.Parse(responseString);

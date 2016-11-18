@@ -7,6 +7,6 @@
 						xmlns:local="clr-namespace:PokemonBetting.Client.Views">
 
 	<local:BattlesPage Title="Finished"/>
-	<local:BattlesPage Title="Unfinished"/>
+	<local:UnfinishedBattlesPage Title="Unfinished"/>
 	
 </TabbedPage>
