@@ -32,7 +32,7 @@ namespace PokemonBetting.Client.Backend
         private void AuthProviderOnPropertyChanged(object sender,
             PropertyChangedEventArgs args)
         {
-            if (args.PropertyName == _authProvider.AuthToken)
+            if (args.PropertyName == nameof(IAuthProvider.AuthToken))
             {
                 var newToken = _authProvider.AuthToken;
                 this._httpClient.DefaultRequestHeaders.Authorization = newToken == null ? null :

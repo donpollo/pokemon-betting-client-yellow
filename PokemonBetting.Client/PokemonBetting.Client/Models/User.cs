@@ -1,10 +1,12 @@
-﻿namespace PokemonBetting.Client.Models
+﻿using PropertyChanged;
+
+namespace PokemonBetting.Client.Models
 {
     public class User : ModelBase<User>
     {
-        public int? Id { get; }
-        public string Username { get; }
-        public string Email { get; }
-        public int Balance { get; }
+        public int? Id { get; private set; }
+        public string Username { get; private set; }
+        public string Email { get; private set; }
+        public int Balance { get; private set; }
     }
 }

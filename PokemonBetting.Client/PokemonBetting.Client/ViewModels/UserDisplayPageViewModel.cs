@@ -4,9 +4,11 @@ using PokemonBetting.Client.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using PropertyChanged;
 
 namespace PokemonBetting.Client.ViewModels
 {
+    [ImplementPropertyChanged]
     public class UserDisplayPageViewModel : BindableBase, INavigationAware
     {
         public DelegateCommand MainPageCommand { get; private set; }

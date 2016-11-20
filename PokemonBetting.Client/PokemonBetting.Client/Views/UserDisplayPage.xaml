@@ -11,13 +11,13 @@
             FontSize="Large"/>
       
     <Label Text="Name" />
-    <Entry Text="{Binding User.UserName}"
+    <Entry Text="{Binding User.Username}"
             Placeholder="Username"
             IsEnabled="false">
     </Entry>
       
     <Label Text="Email" />
-    <Entry Text="{Binding User.EMail}"
+    <Entry Text="{Binding User.Email}"
             Placeholder="Email"
             IsEnabled="false">
     </Entry>
