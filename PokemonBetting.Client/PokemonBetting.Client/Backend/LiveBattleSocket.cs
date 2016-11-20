@@ -15,6 +15,7 @@ namespace PokemonBetting.Client.Backend
         {
             var webSocket = new WebSocket(GetSocketUrl(battleId));
             webSocket.OnMessage += WebSocketOnOnMessage;
+            webSocket.ConnectAsync();
         }
 
         private void WebSocketOnOnMessage(object sender, MessageEventArgs messageEventArgs)
