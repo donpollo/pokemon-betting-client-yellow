@@ -39,11 +39,13 @@
     <Compile Include="Backend\CallResults\CreateUserCallResult.cs" />
     <Compile Include="Backend\IBackendClient.cs" />
     <Compile Include="Backend\CallResults\LoginCallResult.cs" />
+    <Compile Include="Backend\LiveBattleSocket.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\WinnerDataTemplateSelector.cs" />
     <Compile Include="Models\Battle.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="Models\Winner.cs" />
+    <Compile Include="ViewModels\LiveBattlePageViewModel.cs" />
     <Compile Include="Views\BattlesPage.xaml.cs">
       <DependentUpon>BattlesPage.xaml</DependentUpon>
     </Compile>
@@ -56,6 +58,9 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\UserDisplayPageViewModel.cs" />
     <Compile Include="ViewModels\UserFormViewModel.cs" />
+    <Compile Include="Views\LiveBattlePage.xaml.cs">
+      <DependentUpon>LiveBattlePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserDisplayPage.xaml.cs">
       <DependentUpon>UserDisplayPage.xaml</DependentUpon>
     </Compile>
@@ -131,6 +136,9 @@
     </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\System.Net.Http.dll</HintPath>
+    <Reference Include="websocket-sharp, Version=1.0.2.59611, Culture=neutral, PublicKeyToken=5660b08a1845a91e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebSocketSharp.1.0.3-rc11\lib\websocket-sharp.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.3.3.152-pre2\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
@@ -169,7 +177,12 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Views\LiveBattlePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.152-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.152-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

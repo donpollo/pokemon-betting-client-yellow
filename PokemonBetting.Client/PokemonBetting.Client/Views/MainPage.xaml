@@ -8,5 +8,7 @@
                  Orientation="Vertical">
     <Button Text="User Display Page"
                   Command="{Binding UserDisplayPageCommand}"/>
+    <Button Text="Show next live battle"
+                  Command="{Binding NextLiveBattlePageCommand}"/>
   </StackLayout>
 </ContentPage>

@@ -10,6 +10,8 @@ namespace PokemonBetting.Client.Models
 {
     public class Battle
     {
+        [JsonProperty("id")]
+        public int Id { get; set; }
         [JsonProperty("end_time")]
         public string EndTime { get; set; }
         [JsonProperty("start_time")]
