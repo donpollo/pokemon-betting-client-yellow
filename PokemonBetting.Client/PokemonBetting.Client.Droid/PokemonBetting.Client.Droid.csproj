@@ -154,6 +154,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BattleSockets\LiveBattleSocket.cs" />
+    <Compile Include="BattleSockets\LiveBattleSocketFactory.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

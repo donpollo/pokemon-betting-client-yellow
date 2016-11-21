@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using PokemonBetting.Client.Backend.BattleSockets;
+using PokemonBetting.Client.Droid.BattleSockets;
 
 namespace PokemonBetting.Client.Droid
 {
@@ -14,6 +16,8 @@ namespace PokemonBetting.Client.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
+            AbstractLiveBattleSocketFactory.Instance = new LiveBattleSocketFactory();
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

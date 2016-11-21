@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using PokemonBetting.Client.Backend;
+using PokemonBetting.Client.Backend.BattleSockets;
 using PokemonBetting.Client.Models;
 using Prism.Mvvm;
 
@@ -20,10 +21,13 @@ namespace PokemonBetting.Client.ViewModels
 
         private string infoText;
         private string battleHistory;
+        private AbstractLiveBattleSocketFactory socketFactory;
 
         public LiveBattlePageViewModel()
         {
             InfoText = "Not connected.";
+            
+            socketFactory = AbstractLiveBattleSocketFactory.Instance;
 
             ConnectToNextBattle();
         }
@@ -54,7 +58,7 @@ namespace PokemonBetting.Client.ViewModels
 
             InfoText = $"Next battle has the id {battleId} and starts at {battle.StartTime}.";
 
-            var liveSocket = new LiveBattleSocket(battleId);
+            var liveSocket = socketFactory.GetSocket(battleId);
             liveSocket.NewMessageArrived += LiveSocketOnNewMessageArrived;
         }
 
