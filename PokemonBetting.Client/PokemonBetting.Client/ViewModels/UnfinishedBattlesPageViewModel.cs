@@ -15,9 +15,9 @@ namespace PokemonBetting.Client.ViewModels
 	{
 		public UnfinishedBattlesPageViewModel(INavigationService navigationService):base(navigationService)
 		{
-			isFinished = false;
+			IsFinished = false;
 			Battles = new ObservableCollection<Battle>();
-			getBattles();
+			GetBattles();
 		}
 	}
 }

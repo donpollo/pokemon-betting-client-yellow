@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using PokemonBetting.Client.Helpers;
 
@@ -16,6 +17,11 @@ namespace PokemonBetting.Client.Models
         public static T FromJson(string json)
         {
             return LowerCaseSerializer.DeserializeObject<T>(json);
+        }
+
+        public static List<T> FromJsonList(string json)
+        {
+            return LowerCaseSerializer.DeserializeObject<List<T>>(json);
         }
     }
 }

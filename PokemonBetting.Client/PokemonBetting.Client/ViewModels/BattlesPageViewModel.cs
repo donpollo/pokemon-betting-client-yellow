@@ -1,32 +1,28 @@
-﻿using Newtonsoft.Json.Linq;
-using PokemonBetting.Client.Models;
+﻿using PokemonBetting.Client.Models;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Net.Http;
-using Xamarin.Forms;
+using PropertyChanged;
 
 namespace PokemonBetting.Client.ViewModels
 {
+    [ImplementPropertyChanged]
     public class BattlesPageViewModel : BindableBase
     {
-        INavigationService _navigationService;
+        private readonly INavigationService _navigationService;
 
-        public ObservableCollection<Battle> Battles { get; set; }
+        public ObservableCollection<Battle> Battles { get; protected set; }
        
-        public DelegateCommand PreviousCommand { get; set; }
-        public DelegateCommand NextCommand { get; set; }
-        public DelegateCommand GoBackCommand { get; set; }
+        public DelegateCommand PreviousCommand { get; }
+        public DelegateCommand NextCommand { get; }
+        public DelegateCommand GoBackCommand { get; }
 
-        public int PageNumber { get { return offset / limit; } }
-		protected int offset = 0;
-		protected int limit = 10;
-		protected bool isFinished=true;
+        public int PageNumber => Offset / Limit;
+        protected int Offset = 0;
+        protected const int Limit = 10;
+        protected bool IsFinished = true;
 
 
         public BattlesPageViewModel(INavigationService navigationService)
@@ -35,52 +31,47 @@ namespace PokemonBetting.Client.ViewModels
 
             Battles = new ObservableCollection<Battle>();
 
-            PreviousCommand = new DelegateCommand(previousBattles);
-            NextCommand = new DelegateCommand(nextBattles);
+            PreviousCommand = new DelegateCommand(PreviousBattles);
+            NextCommand = new DelegateCommand(NextBattles);
             GoBackCommand = new DelegateCommand(GoBack);
 
-            getBattles();
+            GetBattles();
         }
 
-		protected void nextBattles()
+        private void NextBattles()
         {
-            offset += limit;
-            OnPropertyChanged("PageNumber");
-            getBattles();
+            Offset += Limit;
+            OnPropertyChanged(nameof(PageNumber));
+            GetBattles();
         }
 
-		protected void previousBattles()
+        private void PreviousBattles()
         {
-            offset -= limit;
-            if (offset < 0)
+            Offset -= Limit;
+            if (Offset < 0)
             {
-                offset = 0;
+                Offset = 0;
             }
-            OnPropertyChanged("PageNumber");
-            getBattles();
+            OnPropertyChanged(nameof(PageNumber));
+            GetBattles();
         }
 
-		protected async void GoBack()
+        private async void GoBack()
         {
             await _navigationService.GoBackAsync();
         }
 
 
-        protected async void getBattles()
+        protected async void GetBattles()
         {
-            HttpClient httpClient = new HttpClient();
+            var httpClient = new HttpClient();
             //HttpResponseMessage response = await httpClient.GetAsync(("http://pokemon-battle.bid/api/v1/battles/?limit="+limit+"&offset="+offset+"&is_finished=true"));
-            HttpResponseMessage response = await httpClient.GetAsync("http://163.172.151.151:5000/battles/limit=" + limit + "&offset=" + offset + "&is_finished="+isFinished);
+            var response = await httpClient.GetAsync("http://163.172.151.151:5000/battles/limit=" + Limit + "&offset=" + Offset + "&is_finished="+IsFinished);
 
-            string responseString = await response.Content.ReadAsStringAsync();
-            JArray jArray = JArray.Parse(responseString);
-            Battle[] battleArray = jArray.ToObject<Battle[]>();
+            var responseString = await response.Content.ReadAsStringAsync();
+            var battles = Battle.FromJsonList(responseString);
 
-            Battles.Clear();
-            foreach (Battle b in battleArray)
-            {
-                Battles.Add(b);
-            }
+            Battles = new ObservableCollection<Battle>(battles);
         }
 
         /*protected virtual void OnPropertyChanged(string propertyName)
