@@ -17,7 +17,9 @@ namespace PokemonBetting.Client.Droid.BattleSockets
     {
         public override AbstractLiveBattleSocket GetSocket(int battleId)
         {
-            return new LiveBattleSocket(battleId);
+            var socket = new LiveBattleSocket(battleId);
+            socket.InitializeSocket();
+            return socket;
         }
     }
 }

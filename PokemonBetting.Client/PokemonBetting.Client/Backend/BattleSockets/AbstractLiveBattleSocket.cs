@@ -11,7 +11,7 @@ namespace PokemonBetting.Client.Backend.BattleSockets
             BattleId = battleId;
         }
 
-        protected abstract void InitializeSocket();
+        public abstract void InitializeSocket();
 
         protected void OnMessage(string message)
         {

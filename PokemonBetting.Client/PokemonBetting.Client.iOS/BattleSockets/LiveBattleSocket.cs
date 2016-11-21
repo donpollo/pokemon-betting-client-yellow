@@ -9,7 +9,7 @@ namespace PokemonBetting.Client.iOS.BattleSockets
         {
         }
 
-        protected override void InitializeSocket()
+        public override void InitializeSocket()
         {
             var socket = IO.Socket(GetSocketUrl());
             socket.On(Socket.EVENT_MESSAGE, data => OnMessage(data.ToString()));
