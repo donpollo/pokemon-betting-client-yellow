@@ -2,6 +2,7 @@
 using Microsoft.Practices.Unity;
 using PokemonBetting.Client.Backend;
 using PokemonBetting.Client.Backend.CallResults;
+using PokemonBetting.Client.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -12,6 +13,7 @@ namespace PokemonBetting.Client.ViewModels
     public class MainPageViewModel : BindableBase
     {
         public DelegateCommand UserDisplayPageCommand { get; private set; }
+        public DelegateCommand BattlesPageCommand { get; set; }
 
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _dialogService;
@@ -27,9 +29,9 @@ namespace PokemonBetting.Client.ViewModels
             _dialogService = dialogService;
 
             UserDisplayPageCommand = new DelegateCommand(UserDisplayPage);
+            BattlesPageCommand = new DelegateCommand(BattlesPage);
         }
-
-
+        
         public void EnsureAuthenticated()
         {
             if (_authProvider.IsAuthenticated)
@@ -59,6 +61,11 @@ namespace PokemonBetting.Client.ViewModels
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private async void BattlesPage()
+        {
+            await _navigationService.NavigateAsync(nameof(TabbedBattlesPage));
         }
     }
 }

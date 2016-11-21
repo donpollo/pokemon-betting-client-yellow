@@ -8,7 +8,7 @@
              Padding="16,32">
   <StackLayout VerticalOptions="Start"
                Orientation="Vertical">
-    <Label Text="So who are you actually?"
+    <Label Text="Please introduce yourself"
            FontSize="Large"/>
 
     <Entry Text="{Binding UserNameText}"
