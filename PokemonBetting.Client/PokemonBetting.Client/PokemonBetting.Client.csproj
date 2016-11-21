@@ -41,6 +41,13 @@
     <Compile Include="Backend\CallResults\GetAuthenticatedUserCallResult.cs" />
     <Compile Include="Backend\IBackendClient.cs" />
     <Compile Include="Backend\CallResults\LoginCallResult.cs" />
+    <Compile Include="ViewModels\UnfinishedBattlesPageViewModel.cs" />
+    <Compile Include="Views\BattleListView.xaml.cs">
+      <DependentUpon>BattleListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TabbedBattlesPage.xaml.cs">
+      <DependentUpon>TabbedBattlesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DataTemplateSelectors\WinnerDataTemplateSelector.cs" />
     <Compile Include="Models\Battle.cs" />
     <Compile Include="Models\ModelBase.cs" />
@@ -49,6 +56,7 @@
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Winner.cs" />
+    <Compile Include="ViewModels\TabbedBattlesPageViewModel.cs" />
     <Compile Include="Views\BattlesPage.xaml.cs">
       <DependentUpon>BattlesPage.xaml</DependentUpon>
     </Compile>
@@ -60,6 +68,9 @@
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\UserDisplayPageViewModel.cs" />
     <Compile Include="ViewModels\UserFormViewModel.cs" />
+    <Compile Include="Views\UnfinishedBattlesPage.xaml.cs">
+      <DependentUpon>UnfinishedBattlesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserDisplayPage.xaml.cs">
       <DependentUpon>UserDisplayPage.xaml</DependentUpon>
     </Compile>
@@ -133,8 +144,17 @@
       <HintPath>..\..\packages\PropertyChanged.Fody.1.52.1\lib\portable-net4+sl4+wp8+win8+wpa81+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Net.Http">
-      <HintPath>..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\MonoAndroid\v1.0\System.Net.Http.dll</HintPath>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.29\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.Forms.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Xamarin.Forms.2.3.3.152-pre2\lib\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.Core.dll</HintPath>
@@ -175,6 +195,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\TabbedBattlesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\UnfinishedBattlesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BattleListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\..\packages\Xamarin.Forms.2.3.3.152-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\..\packages\Xamarin.Forms.2.3.3.152-pre2\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10\Xamarin.Forms.targets')" />

@@ -15,21 +15,24 @@ namespace PokemonBetting.Client
 
         protected override void OnInitialized()
         {
-            NavigationService.NavigateAsync("MainPage", animated: false);
-        }
+			NavigationService.NavigateAsync("MainPage", animated: false);
+		}
 
         protected override void RegisterTypes()
         {
             Container.RegisterTypeForNavigation<LoginPage>();
             Container.RegisterTypeForNavigation<UserForm>();
             Container.RegisterTypeForNavigation<MainPage>();
-            Container.RegisterTypeForNavigation<BattlesPage>();
             Container.RegisterTypeForNavigation<UserDisplayPage>();
 
             var authProvider = new AuthProvider(new BackendClient(null, BaseAddress));
             Container.RegisterInstance<IAuthProvider>("AuthProvider", authProvider);
             Container.RegisterInstance<IBackendClient>("BackendClient",
                  new BackendClient(authProvider, BaseAddress));
-        }
+
+			Container.RegisterTypeForNavigation<TabbedBattlesPage>();
+			Container.RegisterTypeForNavigation<BattlesPage>();
+			Container.RegisterTypeForNavigation<UnfinishedBattlesPage>();
+		}
     }
 }
