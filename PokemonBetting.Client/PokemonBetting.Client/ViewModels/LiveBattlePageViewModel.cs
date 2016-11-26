@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using PokemonBetting.Client.Backend;
-using PokemonBetting.Client.Backend.BattleSockets;
 using PokemonBetting.Client.Models;
 using Prism.Mvvm;
 
@@ -14,20 +13,14 @@ namespace PokemonBetting.Client.ViewModels
 {
     public class LiveBattlePageViewModel : BindableBase
     {
-        //private const string NextBattleQueryString =
-        //  "http://163.172.151.151:5000/battles/limit=1&offset=0&is_finished=false";
-        private const string NextBattleQueryString =
-            "http://10.0.2.2:5000/battles/limit=1&offset=0&is_finished=false";
-
+        private const string NextBattleQueryString = "http://163.172.151.151:5000/battles/limit=1&offset=0&is_finished=false";
+        
         private string infoText;
         private string battleHistory;
-        private AbstractLiveBattleSocketFactory socketFactory;
 
         public LiveBattlePageViewModel()
         {
             InfoText = "Not connected.";
-            
-            socketFactory = AbstractLiveBattleSocketFactory.Instance;
 
             ConnectToNextBattle();
         }
