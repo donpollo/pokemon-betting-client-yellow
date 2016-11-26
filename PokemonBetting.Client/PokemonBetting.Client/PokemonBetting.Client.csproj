@@ -39,9 +39,9 @@
     <Compile Include="Backend\APIClients\BettingAPIClient.cs" />
     <Compile Include="Backend\BackendClient.cs" />
     <Compile Include="Backend\APIClients\BattleAPIClient.cs" />
+    <Compile Include="Models\BattleLog.cs" />
     <Compile Include="ViewModels\BattleLogProvider.cs" />
     <Compile Include="Backend\BattleLog\FinishedBattleLogProvider.cs" />
-    <Compile Include="Backend\BattleLog\IBattleLogProvider.cs" />
     <Compile Include="Backend\CallResults\CreateUserCallResult.cs" />
     <Compile Include="Backend\IBackendClient.cs" />
     <Compile Include="Backend\CallResults\LoginCallResult.cs" />

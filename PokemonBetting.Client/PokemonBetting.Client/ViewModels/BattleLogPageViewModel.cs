@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -13,14 +15,18 @@ namespace PokemonBetting.Client.ViewModels
 {
     public class BattleLogPageViewModel : BindableBase
     {
-        private const string NextBattleQueryString = "battles/?is_finished=false&offset=0&limit=1";
+        private const string NextBattleQueryString = "battles/?is_finished=false&offset=0&limit=10";
 
+        private BattleLogProvider batteBattleLogProvider;
         private string infoText;
         private string battleHistory;
 
         public BattleLogPageViewModel()
         {
+            batteBattleLogProvider = new BattleLogProvider();
+
             InfoText = "Not connected.";
+            BattleHistory = "Here is the battle history.";
 
             ConnectToNextBattle();
         }
@@ -44,18 +50,35 @@ namespace PokemonBetting.Client.ViewModels
             var responseString = await battleApiClient.GetAsync(NextBattleQueryString);
             var battles = JArray.Parse(responseString).ToObject<Battle[]>();
 
-            var battle = battles[0];
-            var battleId = battle.Id;
+            var selectedBattle = battles[0];
 
-            InfoText = $"Next battle has the id {battleId} and starts at {battle.StartTime}.";
+            foreach (var battle in battles)
+            {
+                var startTime = DateTime.ParseExact(battle.StartTime, "MM/dd/yyyy HH:mm:ss", null);
+                var now = DateTime.Now;
 
-            var liveSocket = socketFactory.GetSocket(battleId);
-            liveSocket.NewMessageArrived += LiveSocketOnNewMessageArrived;
+                var diff = startTime - now;
+
+                if (diff >= new TimeSpan(-1, 0, 0))
+                {
+                    selectedBattle = battle;
+                    break;
+                }
+            }
+
+            var battleId = selectedBattle.Id;
+
+            InfoText = $"Next battle has the id {battleId} and starts at {selectedBattle.StartTime}.";
+
+            batteBattleLogProvider.LogElements.CollectionChanged += LogProviderOnPropertyChanged;
+            batteBattleLogProvider.ProvideLogForBattle(battleId);
         }
 
-        private void LiveSocketOnNewMessageArrived(object sender, string message)
+        private void LogProviderOnPropertyChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            BattleHistory = BattleHistory + message;
+            var completeLog = string.Join("\n", batteBattleLogProvider.LogElements.ToArray());
+            BattleHistory = completeLog;
         }
+
     }
 }
