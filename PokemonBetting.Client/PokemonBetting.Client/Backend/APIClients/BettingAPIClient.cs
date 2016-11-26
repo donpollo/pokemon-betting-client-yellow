@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace PokemonBetting.Client.Backend.APIClients
 {
-    class BettingAPIClient : APIClient
+    public class BettingAPIClient : APIClient
     {
+        public BettingAPIClient()
+        {
+        }
+
+        public BettingAPIClient(TimeSpan timeout) : base(timeout)
+        {
+        }
+
         protected override string BaseAddress => App.BaseAddress;
     }
 }

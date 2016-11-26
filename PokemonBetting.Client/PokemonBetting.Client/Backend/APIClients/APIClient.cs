@@ -1,24 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace PokemonBetting.Client.Backend
+namespace PokemonBetting.Client.Backend.APIClients
 {
     public abstract class APIClient
     {
-        private HttpClient httpClient;
+        protected HttpClient httpClient;
 
         public APIClient()
         {
             httpClient = new HttpClient();
         }
 
+        public APIClient(TimeSpan timeout) : base()
+        {
+            httpClient = new HttpClient {Timeout = timeout};
+        }
+
         public async Task<string> GetAsync(string route)
         {
-            var response = await httpClient.GetAsync(BaseAddress + route);
+            var requestUrl = BaseAddress + route;
+            var response = await httpClient.GetAsync(requestUrl);
             var responseString = await response.Content.ReadAsStringAsync();
 
             return responseString;
