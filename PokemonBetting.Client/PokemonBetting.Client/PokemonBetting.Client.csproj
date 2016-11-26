@@ -47,9 +47,13 @@
     <Compile Include="Backend\CallResults\GetAuthenticatedUserCallResult.cs" />
     <Compile Include="Backend\IBackendClient.cs" />
     <Compile Include="Backend\CallResults\LoginCallResult.cs" />
+    <Compile Include="ViewModels\PlaceBetPageViewModel.cs" />
     <Compile Include="ViewModels\UnfinishedBattlesPageViewModel.cs" />
     <Compile Include="Views\BattleListView.xaml.cs">
       <DependentUpon>BattleListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlaceBetPage.xaml.cs">
+      <DependentUpon>PlaceBetPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TabbedBattlesPage.xaml.cs">
       <DependentUpon>TabbedBattlesPage.xaml</DependentUpon>
@@ -227,6 +231,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\BattleListView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\PlaceBetPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
