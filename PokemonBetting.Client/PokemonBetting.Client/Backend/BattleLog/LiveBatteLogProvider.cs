@@ -30,6 +30,11 @@ namespace PokemonBetting.Client.Backend.BattleLog
             var diff = startTime - now;
             var delay = diff - new TimeSpan(0, 0, OffsetBeforeBattleStartInSeconds);
 
+            if (delay < TimeSpan.Zero)
+            {
+                delay = TimeSpan.Zero;
+            }
+
             await Task.Delay(delay);
 
             Task.Run(() => PollLogElements(battle));
