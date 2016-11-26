@@ -7,13 +7,14 @@ using Prism.Mvvm;
 
 namespace PokemonBetting.Client.ViewModels
 {
-    class BattleLogProvider : BindableBase, IBattleLogProvider
+    class BattleLogProvider : BindableBase
     {
+        private ObservableCollection<string> _logElements;
         private const string GetBattleRequest = "battles/";
 
-        public BattleLogProvider(string baseAddress)
+        public BattleLogProvider()
         {
-            
+            LogElements = new ObservableCollection<string>();
         }
 
         public async void ProvideLogForBattle(int battleId)
@@ -25,7 +26,13 @@ namespace PokemonBetting.Client.ViewModels
 
             if (IsBattleFinished(battle))
             {
-                
+                var logProvider = new FinishedBattleLogProvider(LogElements);
+                await logProvider.GetLogForFinishedBattle(battleId);
+            }
+            else
+            {
+                var logProvider = new LiveBatteLogProvider(LogElements);
+                logProvider.StartPollingLogForBattle(battleId);
             }
         }
 
@@ -34,6 +41,10 @@ namespace PokemonBetting.Client.ViewModels
             return !string.IsNullOrEmpty(battle.EndTime);
         }
 
-        public ObservableCollection<string> LogElements { get; set; }
+        public ObservableCollection<string> LogElements
+        {
+            get { return _logElements; }
+            set { SetProperty(ref _logElements, value); }
+        }
     }
 }
