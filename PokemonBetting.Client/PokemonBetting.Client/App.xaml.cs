@@ -9,7 +9,7 @@ namespace PokemonBetting.Client
 {
     public partial class App : PrismApplication
     {
-        private const string BaseAddress = "http://163.172.151.151/";
+        public const string BaseAddress = "http://163.172.151.151/";
 
         public App(IPlatformInitializer initializer = null) : base(initializer) { }
 
@@ -25,7 +25,7 @@ namespace PokemonBetting.Client
             Container.RegisterTypeForNavigation<MainPage>();
             Container.RegisterTypeForNavigation<BattlesPage>();
             Container.RegisterTypeForNavigation<UserDisplayPage>();
-            Container.RegisterTypeForNavigation<LiveBattlePage>();
+            Container.RegisterTypeForNavigation<BattleLogPage>();
 
             var authProvider = new AuthProvider(new BackendClient(null, BaseAddress));
             Container.RegisterInstance<IAuthProvider>("AuthProvider", authProvider);

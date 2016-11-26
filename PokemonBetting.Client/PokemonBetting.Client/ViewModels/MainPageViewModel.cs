@@ -42,7 +42,7 @@ namespace PokemonBetting.Client.ViewModels
 
         private async void NextLiveBattlePage()
         {
-            await _navigationService.NavigateAsync(nameof(LiveBattlePage), useModalNavigation: true);
+            await _navigationService.NavigateAsync(nameof(BattleLogPage), useModalNavigation: true);
         }
     }
 }

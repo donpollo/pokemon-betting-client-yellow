@@ -11,14 +11,14 @@ using Prism.Mvvm;
 
 namespace PokemonBetting.Client.ViewModels
 {
-    public class LiveBattlePageViewModel : BindableBase
+    public class BattleLogPageViewModel : BindableBase
     {
-        private const string NextBattleQueryString = "http://163.172.151.151:5000/battles/limit=1&offset=0&is_finished=false";
-        
+        private const string NextBattleQueryString = "battles/?is_finished=false&offset=0&limit=1";
+
         private string infoText;
         private string battleHistory;
 
-        public LiveBattlePageViewModel()
+        public BattleLogPageViewModel()
         {
             InfoText = "Not connected.";
 
@@ -39,11 +39,9 @@ namespace PokemonBetting.Client.ViewModels
 
         private async Task ConnectToNextBattle()
         {
-            InfoText = "Connecting to next battle...";
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(NextBattleQueryString);
+            var battleApiClient = new BattleAPIClient();
 
-            var responseString = await response.Content.ReadAsStringAsync();
+            var responseString = await battleApiClient.GetAsync(NextBattleQueryString);
             var battles = JArray.Parse(responseString).ToObject<Battle[]>();
 
             var battle = battles[0];

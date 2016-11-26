@@ -8,9 +8,9 @@ using Xamarin.Forms;
 
 namespace PokemonBetting.Client.Views
 {
-    public partial class LiveBattlePage : ContentPage
+    public partial class BattleLogPage : ContentPage
     {
-        public LiveBattlePage()
+        public BattleLogPage()
         {
             InitializeComponent();
         }
