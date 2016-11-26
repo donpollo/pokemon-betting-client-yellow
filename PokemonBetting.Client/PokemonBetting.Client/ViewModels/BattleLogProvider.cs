@@ -32,7 +32,7 @@ namespace PokemonBetting.Client.ViewModels
             else
             {
                 var logProvider = new LiveBatteLogProvider(LogElements);
-                logProvider.StartPollingLogForBattle(battleId);
+                logProvider.StartPollingLogForBattle(battle);
             }
         }
 

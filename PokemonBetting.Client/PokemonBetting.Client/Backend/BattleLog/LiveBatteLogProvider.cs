@@ -2,13 +2,15 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using PokemonBetting.Client.Backend.APIClients;
+using PokemonBetting.Client.Models;
 
 namespace PokemonBetting.Client.Backend.BattleLog
 {
     public class LiveBatteLogProvider
     {
         private const string LogQuery = "battleLogs/live/";
-        private const int TimeoutMinutes = 35;
+        private const int TimeoutMinutes = 2;
+        private const int OffsetBeforeBattleStartInSeconds = 10;
 
         private BettingAPIClient bettingApiClient;
         private ObservableCollection<string> targetCollection;
@@ -20,24 +22,34 @@ namespace PokemonBetting.Client.Backend.BattleLog
             bettingApiClient = new BettingAPIClient(new TimeSpan(0, 0, TimeoutMinutes, 0));
         }
 
-        public void StartPollingLogForBattle(int battleId)
+        public async Task StartPollingLogForBattle(Battle battle)
         {
-            Task.Run(async () =>
+            var startTime = DateTime.Parse(battle.StartTime, null);
+            var now = DateTime.Now;
+
+            var diff = startTime - now;
+            var delay = diff - new TimeSpan(0, 0, OffsetBeforeBattleStartInSeconds);
+
+            await Task.Delay(delay);
+
+            Task.Run(() => PollLogElements(battle));
+        }
+
+        private async Task PollLogElements(Battle battle)
+        {
+            while (true)
             {
-                while (true)
+                try
                 {
-                    try
-                    {
-                        var logElement = await bettingApiClient.GetAsync(LogQuery + battleId);
-                        targetCollection.Add(logElement);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                        // request timed out
-                        break;
-                    }
+                    var logElement = await bettingApiClient.GetAsync(LogQuery + battle.Id);
+                    targetCollection.Add(logElement);
                 }
-            });
+                catch (TaskCanceledException)
+                {
+                    // request timed out
+                    break;
+                }
+            }
         }
     }
 }
