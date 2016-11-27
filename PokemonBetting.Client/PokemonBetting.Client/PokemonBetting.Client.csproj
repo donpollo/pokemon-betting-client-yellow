@@ -35,7 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Backend\APIClients\APIClient.cs" />
+    <Compile Include="Backend\APIClients\BettingAPIClient.cs" />
     <Compile Include="Backend\BackendClient.cs" />
+    <Compile Include="Backend\APIClients\BattleAPIClient.cs" />
+    <Compile Include="Models\BattleLog.cs" />
+    <Compile Include="ViewModels\BattleLogProvider.cs" />
+    <Compile Include="Backend\BattleLog\FinishedBattleLogProvider.cs" />
     <Compile Include="Backend\CallResults\CreateUserCallResult.cs" />
     <Compile Include="Backend\CallResults\GenericCallResult.cs" />
     <Compile Include="Backend\CallResults\GetAuthenticatedUserCallResult.cs" />
@@ -48,6 +54,7 @@
     <Compile Include="Views\TabbedBattlesPage.xaml.cs">
       <DependentUpon>TabbedBattlesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Backend\BattleLog\LiveBatteLogProvider.cs" />
     <Compile Include="Helpers\DataTemplateSelectors\WinnerDataTemplateSelector.cs" />
     <Compile Include="Models\Battle.cs" />
     <Compile Include="Models\ModelBase.cs" />
@@ -56,6 +63,7 @@
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Winner.cs" />
+    <Compile Include="ViewModels\BattleLogPageViewModel.cs" />
     <Compile Include="ViewModels\TabbedBattlesPageViewModel.cs" />
     <Compile Include="Views\BattlesPage.xaml.cs">
       <DependentUpon>BattlesPage.xaml</DependentUpon>
@@ -70,6 +78,9 @@
     <Compile Include="ViewModels\UserFormViewModel.cs" />
     <Compile Include="Views\UnfinishedBattlesPage.xaml.cs">
       <DependentUpon>UnfinishedBattlesPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BattleLogPage.xaml.cs">
+      <DependentUpon>BattleLogPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserDisplayPage.xaml.cs">
       <DependentUpon>UserDisplayPage.xaml</DependentUpon>
@@ -189,6 +200,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\BattlesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BattleLogPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
