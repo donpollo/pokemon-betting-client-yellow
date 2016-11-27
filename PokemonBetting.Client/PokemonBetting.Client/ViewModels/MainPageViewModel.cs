@@ -12,10 +12,9 @@ namespace PokemonBetting.Client.ViewModels
 {
     public class MainPageViewModel : BindableBase
     {
-        public DelegateCommand UserDisplayPageCommand { get; private set; }
-        public DelegateCommand BattlesPageCommand { get; set; }
+        public DelegateCommand UserDisplayPageCommand { get; }
+        public DelegateCommand BattlesPageCommand { get; }
 
-        public DelegateCommand NextLiveBattlePageCommand { get; private set; }
 
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _dialogService;

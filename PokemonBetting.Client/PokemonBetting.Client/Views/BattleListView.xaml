@@ -32,28 +32,82 @@
                     <TapGestureRecognizer Command="{Binding BindingContext.UnfinishedBattleOnTapCommand, Source={x:Reference BattlesView}}"
                                           CommandParameter="{Binding}"/>
                   </Grid.GestureRecognizers>
+                  
+                  <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                  </Grid.RowDefinitions>
+                  
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
 
-                  <Label Text="{Binding Team1.Trainer.Name}" />
-                  <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                  <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+                  <Label Grid.Row="0" Grid.Column="0"
+                         Text="{Binding Team1.Trainer.Name}" />
+                  <Label Grid.Row="0" Grid.Column="1"
+                         Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                  <Label Grid.Row="0" Grid.Column="2"
+                         Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+                  
+                  <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                         HorizontalOptions="End"
+                         Text="{Binding StartDateTime, StringFormat='{0:dd.MM} {0:HH\':\'mm\':\'ss}'}"/>
                 </Grid>
               </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="Team1WinnerTemplate">
               <ViewCell>
                 <Grid>
-                  <Label Text="{Binding Team1.Trainer.Name}" TextColor="Red" />
-                  <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                  <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+                  <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                  </Grid.RowDefinitions>
+                  
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+                  
+                  <Label Grid.Row="0" Grid.Column="0"
+                         Text="{Binding Team1.Trainer.Name}" TextColor="Red" />
+                  <Label Grid.Row="0" Grid.Column="1"
+                         Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                  <Label Grid.Row="0" Grid.Column="2"
+                         Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+
+                  <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                         HorizontalOptions="End"
+                         Text="{Binding StartDateTime, StringFormat='{0:dd.MM} {0:HH\':\'mm\':\'ss}'}"/>
                 </Grid>
               </ViewCell>
             </DataTemplate>
             <DataTemplate x:Key="Team2WinnerTemplate">
               <ViewCell>
                 <Grid>
-                  <Label Text="{Binding Team1.Trainer.Name}" />
-                  <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                  <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" TextColor="Red" HorizontalTextAlignment="End"/>
+                  <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                  </Grid.RowDefinitions>
+                  
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                  </Grid.ColumnDefinitions>
+                  
+                  <Label Grid.Row="0" Grid.Column="0"
+                         Text="{Binding Team1.Trainer.Name}" />
+                  <Label Grid.Row="0" Grid.Column="1"
+                         Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                  <Label Grid.Row="0" Grid.Column="2"
+                         Text="{Binding Team2.Trainer.Name}" TextColor="Red" HorizontalTextAlignment="End"/>
+
+                  <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                         HorizontalOptions="End"
+                         Text="{Binding StartDateTime, StringFormat='{0:dd.MM} {0:HH\':\'mm\':\'ss}'}"/>
                 </Grid>
               </ViewCell>
             </DataTemplate>
