@@ -6,24 +6,44 @@
              x:Class="PokemonBetting.Client.Views.UserDisplayPage">
   <StackLayout VerticalOptions="Start"
               Orientation="Vertical">
-      
+
     <Label Text="User Display"
             FontSize="Large"/>
-      
+
     <Label Text="Name" />
     <Entry Text="{Binding User.Username}"
             Placeholder="Username"
             IsEnabled="false">
     </Entry>
-      
+
     <Label Text="Email" />
     <Entry Text="{Binding User.Email}"
             Placeholder="Email"
             IsEnabled="false">
     </Entry>
-    
+
+    <Label Text="Balance" />
+    <Entry Text="{Binding User.Balance}"
+            Placeholder="Balance"
+            IsEnabled="false">
+    </Entry>
+
+    <Label Text="Transactions" />
+    <StackLayout VerticalOptions="Start"
+            Orientation="Horizontal">
+      <Entry Text="{Binding AmountEntry, Mode=TwoWay}"
+             Keyboard="Numeric"
+            Placeholder="Balance">
+      </Entry>
+
+      <Button Text="Deposit"
+            Command="{Binding DepositCommand}"/>
+      <Button Text="Withdraw"
+            Command="{Binding WithdrawCommand}"/>
+    </StackLayout>
+
     <Button Text="Back to main page"
-            Command="{Binding MainPageCommand}"/>
-      
+          Command="{Binding MainPageCommand}"/>
+
   </StackLayout>
 </ContentPage>

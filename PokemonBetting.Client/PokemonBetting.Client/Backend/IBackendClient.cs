@@ -11,5 +11,9 @@ namespace PokemonBetting.Client.Backend
         Task<CreateUserCallResult> CreateUser(NewUser userData);
 
         Task<GetAuthenticatedUserCallResult> GetAuthenticatedUser();
+
+        Task<DepositCallResult> Deposit(int amount);
+
+        Task<WithdrawCallResult> Withdraw(int amount);
     }
 }
