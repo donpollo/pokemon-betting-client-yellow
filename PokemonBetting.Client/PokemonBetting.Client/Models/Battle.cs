@@ -4,15 +4,16 @@ namespace PokemonBetting.Client.Models
 {
     public class Battle : ModelBase<Battle>
     {
-        public int Id { get; set; }
-        public string EndTime { get; set; }
+        public int Id { get; private set; }
 
-        public string StartTime { get; set; }
+        public string EndTime { get; private set; }
 
-        public Team Team1 { get; set; }
+        public string StartTime { get; private set; }
 
-        public Team Team2 { get; set; }
+        public Team Team1 { get; private set; }
 
-        public Winner Winner { get; set; }
+        public Team Team2 { get; private set; }
+
+        public Winner Winner { get; private set; }
     }
 }

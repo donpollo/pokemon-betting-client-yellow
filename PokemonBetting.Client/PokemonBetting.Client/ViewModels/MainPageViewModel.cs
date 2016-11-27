@@ -3,7 +3,6 @@ using Microsoft.Practices.Unity;
 using PokemonBetting.Client.Backend;
 using PokemonBetting.Client.Backend.CallResults;
 using PokemonBetting.Client.Views;
-using PokemonBetting.Client.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
