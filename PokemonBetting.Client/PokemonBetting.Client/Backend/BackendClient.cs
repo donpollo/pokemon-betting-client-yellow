@@ -100,5 +100,49 @@ namespace PokemonBetting.Client.Backend
             var user = User.FromJson(responseString);
             return new GetAuthenticatedUserCallResult(user);
         }
+
+        public async Task<DepositCallResult> Deposit(int amount)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.PostAsync($"users/me/deposit/{amount}", null);
+            }
+            catch (Exception)
+            {
+                return new DepositCallResult(DepositCallResult.DepositCallResultEnum.InternalServerError);
+            }
+
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.NoContent:
+                    return new DepositCallResult(DepositCallResult.DepositCallResultEnum.NoContent);
+                default:
+                    return new DepositCallResult(DepositCallResult.DepositCallResultEnum.InternalServerError);
+            }
+        }
+
+        public async Task<WithdrawCallResult> Withdraw(int amount)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.PostAsync($"users/me/withdraw/{amount}", null);
+            }
+            catch (Exception)
+            {
+                return new WithdrawCallResult(WithdrawCallResult.WithdrawCallResultEnum.InternalServerError);
+            }
+
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.BadRequest:
+                    return new WithdrawCallResult(WithdrawCallResult.WithdrawCallResultEnum.BadRequest);
+                case HttpStatusCode.NoContent:
+                    return new WithdrawCallResult(WithdrawCallResult.WithdrawCallResultEnum.NoContent);
+                default:
+                    return new WithdrawCallResult(WithdrawCallResult.WithdrawCallResultEnum.InternalServerError);
+            }
+        }
     }
 }
