@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using PokemonBetting.Client.Backend;
@@ -17,30 +13,30 @@ namespace PokemonBetting.Client.ViewModels
     {
         private const string NextBattleQueryString = "battles/?is_finished=false&offset=0&limit=10";
 
-        private BattleLogProvider batteBattleLogProvider;
-        private string infoText;
-        private string battleHistory;
+        private readonly BattleLogProvider _batteBattleLogProvider;
+        private string _infoText;
+        private string _battleHistory;
 
         public BattleLogPageViewModel()
         {
-            batteBattleLogProvider = new BattleLogProvider();
+            _batteBattleLogProvider = new BattleLogProvider();
 
             InfoText = "Not connected.";
             BattleHistory = "Here is the battle history.";
 
-            ConnectToNextBattle();
+            Task.Run(async () => await ConnectToNextBattle());
         }
 
         public string InfoText
         {
-            get { return infoText; }
-            set { SetProperty(ref infoText, value); }
+            get { return _infoText; }
+            set { SetProperty(ref _infoText, value); }
         }
 
         public string BattleHistory
         {
-            get { return battleHistory; }
-            set { SetProperty(ref battleHistory, value); }
+            get { return _battleHistory; }
+            set { SetProperty(ref _battleHistory, value); }
         }
 
         private async Task ConnectToNextBattle()
@@ -70,13 +66,13 @@ namespace PokemonBetting.Client.ViewModels
 
             InfoText = $"Next battle has the id {battleId} and starts at {selectedBattle.StartTime}.";
 
-            batteBattleLogProvider.LogElements.CollectionChanged += LogProviderOnPropertyChanged;
-            batteBattleLogProvider.ProvideLogForBattle(battleId);
+            _batteBattleLogProvider.LogElements.CollectionChanged += LogProviderOnPropertyChanged;
+            await _batteBattleLogProvider.ProvideLogForBattle(battleId);
         }
 
         private void LogProviderOnPropertyChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            var completeLog = string.Join("\n", batteBattleLogProvider.LogElements.ToArray());
+            var completeLog = string.Join("\n", _batteBattleLogProvider.LogElements.ToArray());
             BattleHistory = completeLog;
         }
 

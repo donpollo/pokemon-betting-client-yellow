@@ -12,14 +12,14 @@ namespace PokemonBetting.Client.Backend.BattleLog
         private const int TimeoutMinutes = 2;
         private const int OffsetBeforeBattleStartInSeconds = 10;
 
-        private BettingAPIClient bettingApiClient;
-        private ObservableCollection<string> targetCollection;
+        private readonly BettingAPIClient _bettingApiClient;
+        private readonly ObservableCollection<string> _targetCollection;
 
         public LiveBatteLogProvider(ObservableCollection<string> targetCollection)
         {
-            this.targetCollection = targetCollection;
+            this._targetCollection = targetCollection;
 
-            bettingApiClient = new BettingAPIClient(new TimeSpan(0, 0, TimeoutMinutes, 0));
+            _bettingApiClient = new BettingAPIClient(new TimeSpan(0, 0, TimeoutMinutes, 0));
         }
 
         public async Task StartPollingLogForBattle(Battle battle)
@@ -37,7 +37,7 @@ namespace PokemonBetting.Client.Backend.BattleLog
 
             await Task.Delay(delay);
 
-            Task.Run(() => PollLogElements(battle));
+            await PollLogElements(battle);
         }
 
         private async Task PollLogElements(Battle battle)
@@ -46,8 +46,8 @@ namespace PokemonBetting.Client.Backend.BattleLog
             {
                 try
                 {
-                    var logElement = await bettingApiClient.GetAsync(LogQuery + battle.Id);
-                    targetCollection.Add(logElement);
+                    var logElement = await _bettingApiClient.GetAsync(LogQuery + battle.Id);
+                    _targetCollection.Add(logElement);
                 }
                 catch (TaskCanceledException)
                 {
