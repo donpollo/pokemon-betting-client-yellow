@@ -4,7 +4,10 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Threading.Tasks;
+using PokemonBetting.Client.Views;
 using PropertyChanged;
+using Xamarin.Forms;
 
 namespace PokemonBetting.Client.ViewModels
 {
@@ -18,6 +21,8 @@ namespace PokemonBetting.Client.ViewModels
         public DelegateCommand PreviousCommand { get; }
         public DelegateCommand NextCommand { get; }
         public DelegateCommand GoBackCommand { get; }
+
+        public Command UnfinishedBattleOnTapCommand { get; }
 
         public int PageNumber => Offset / Limit;
         protected int Offset = 0;
@@ -35,7 +40,15 @@ namespace PokemonBetting.Client.ViewModels
             NextCommand = new DelegateCommand(NextBattles);
             GoBackCommand = new DelegateCommand(GoBack);
 
+            UnfinishedBattleOnTapCommand = new Command(async battle => await this.NavigateToBattle(battle as Battle));
+
             GetBattles();
+        }
+
+        private async Task NavigateToBattle(Battle battle)
+        {
+            var navigationParameters = new NavigationParameters { ["Battle"] = battle };
+            await _navigationService.NavigateAsync(nameof(BattleLogPage), navigationParameters);
         }
 
         private void NextBattles()

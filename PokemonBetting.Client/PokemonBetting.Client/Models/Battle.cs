@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace PokemonBetting.Client.Models
 {
@@ -9,6 +10,8 @@ namespace PokemonBetting.Client.Models
         public string EndTime { get; private set; }
 
         public string StartTime { get; private set; }
+
+        public DateTime StartDateTime => DateTime.Parse(StartTime, null);
 
         public Team Team1 { get; private set; }
 

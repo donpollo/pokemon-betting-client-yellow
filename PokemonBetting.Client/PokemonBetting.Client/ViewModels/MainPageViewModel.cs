@@ -32,7 +32,6 @@ namespace PokemonBetting.Client.ViewModels
 
             UserDisplayPageCommand = new DelegateCommand(UserDisplayPage);
             BattlesPageCommand = new DelegateCommand(BattlesPage);
-            NextLiveBattlePageCommand = new DelegateCommand(NextLiveBattlePage);
         }
         
         public void EnsureAuthenticated()
@@ -69,11 +68,6 @@ namespace PokemonBetting.Client.ViewModels
         private async void BattlesPage()
         {
             await _navigationService.NavigateAsync(nameof(TabbedBattlesPage));
-        }
-
-        private async void NextLiveBattlePage()
-        {
-            await _navigationService.NavigateAsync(nameof(BattleLogPage), useModalNavigation: true);
         }
     }
 }

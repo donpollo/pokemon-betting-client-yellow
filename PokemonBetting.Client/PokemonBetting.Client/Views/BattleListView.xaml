@@ -3,42 +3,10 @@
 	xmlns="http://xamarin.com/schemas/2014/forms"
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	x:Class="PokemonBetting.Client.Views.BattleListView"
-	xmlns:selectors="clr-namespace:PokemonBetting.Client.Helpers.DataTemplateSelectors">
+	xmlns:selectors="clr-namespace:PokemonBetting.Client.Helpers.DataTemplateSelectors"
+  x:Name="TheContentView">
 
 	<ContentView.Resources>
-		<ResourceDictionary>
-			<DataTemplate x:Key="noWinnerTemplate">
-				<ViewCell>
-					<Grid>
-						<Label Text="{Binding Team1.Trainer.Name}" />
-						<Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-						<Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
-					</Grid>
-				</ViewCell>
-			</DataTemplate>
-			<DataTemplate x:Key="team1WinnerTemplate">
-				<ViewCell>
-					<Grid>
-						<Label Text="{Binding Team1.Trainer.Name}" TextColor="Red" />
-						<Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-						<Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
-					</Grid>
-				</ViewCell>
-			</DataTemplate>
-			<DataTemplate x:Key="team2WinnerTemplate">
-				<ViewCell>
-					<Grid>
-						<Label Text="{Binding Team1.Trainer.Name}" />
-						<Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-						<Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" TextColor="Red" HorizontalTextAlignment="End"/>
-					</Grid>
-				</ViewCell>
-			</DataTemplate>
-			<selectors:WinnerDataTemplateSelector x:Key="winnerDataTemplateSelector"
-        NoWinnerTemplate="{StaticResource noWinnerTemplate}"
-        Team1WinnerTemplate="{StaticResource team1WinnerTemplate}"
-        Team2WinnerTemplate="{StaticResource team2WinnerTemplate}" />
-		</ResourceDictionary>
 	</ContentView.Resources>
 	<ContentView.Padding>
 		<OnPlatform x:TypeArguments="Thickness"
@@ -51,7 +19,51 @@
                  HorizontalOptions="FillAndExpand"
                  Orientation="Vertical"
                  Spacing="15">
-			<ListView x:Name="BattlesView" ItemsSource="{Binding Battles}" ItemTemplate="{StaticResource winnerDataTemplateSelector}"/>
+      <ListView x:Name="BattlesView"
+                ItemsSource="{Binding Battles}"
+                ItemTemplate="{StaticResource WinnerDataTemplateSelector}"
+                ItemSelected="BattlesView_OnItemSelected">
+        <ListView.Resources>
+          <ResourceDictionary>
+            <DataTemplate x:Key="NoWinnerTemplate">
+              <ViewCell>
+                <Grid>
+                  <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BindingContext.UnfinishedBattleOnTapCommand, Source={x:Reference BattlesView}}"
+                                          CommandParameter="{Binding}"/>
+                  </Grid.GestureRecognizers>
+
+                  <Label Text="{Binding Team1.Trainer.Name}" />
+                  <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                  <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="Team1WinnerTemplate">
+              <ViewCell>
+                <Grid>
+                  <Label Text="{Binding Team1.Trainer.Name}" TextColor="Red" />
+                  <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                  <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="Team2WinnerTemplate">
+              <ViewCell>
+                <Grid>
+                  <Label Text="{Binding Team1.Trainer.Name}" />
+                  <Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                  <Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" TextColor="Red" HorizontalTextAlignment="End"/>
+                </Grid>
+              </ViewCell>
+            </DataTemplate>
+            <selectors:WinnerDataTemplateSelector x:Key="WinnerDataTemplateSelector"
+              NoWinnerTemplate="{StaticResource NoWinnerTemplate}"
+              Team1WinnerTemplate="{StaticResource Team1WinnerTemplate}"
+              Team2WinnerTemplate="{StaticResource Team2WinnerTemplate}" />
+          </ResourceDictionary>
+        </ListView.Resources>
+      </ListView>
 
 			<StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand">
 				<StackLayout Orientation="Vertical"  HorizontalOptions="FillAndExpand">
