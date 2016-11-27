@@ -6,7 +6,7 @@
             x:Class="PokemonBetting.Client.Views.TabbedBattlesPage"
 						xmlns:local="clr-namespace:PokemonBetting.Client.Views">
 
-	<local:BattlesPage Title="Finished"/>
-	<local:UnfinishedBattlesPage Title="Unfinished"/>
-	
+  <local:UnfinishedBattlesPage Title="Unfinished"/>
+  <local:BattlesPage Title="Finished"/>
+
 </TabbedPage>

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using PokemonBetting.Client.Backend;
+using PokemonBetting.Client.Backend.BattleLog;
 using PokemonBetting.Client.Models;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -25,25 +27,29 @@ namespace PokemonBetting.Client.ViewModels
             BattleHistory = "Here is the battle history.";
         }
 
-        public string InfoText { get; set; }
+        public string InfoText { get; private set; }
 
-        public string BattleHistory { get; set; }
+        public string BattleHistory { get; private set; }
+
+        public Battle Battle { get; private set; }
+
+        public ObservableCollection<BattleLogItem> BattleLog => _batteBattleLogProvider?.LogElements ?? new ObservableCollection<BattleLogItem>();
 
         private async Task ConnectTotBattle(Battle battle)
         {
-            var battleApiClient = new BattleAPIClient();
+            this.Battle = battle;
             var battleId = battle.Id;
 
             InfoText = $"Battle has the id {battleId} and starts at {battle.StartDateTime}.";
 
             _batteBattleLogProvider.LogElements.CollectionChanged += LogProviderOnPropertyChanged;
-            await _batteBattleLogProvider.ProvideLogForBattle(battleId);
+            await _batteBattleLogProvider.ProvideLogForBattle(battle);
         }
 
         private void LogProviderOnPropertyChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            var completeLog = string.Join("\n", _batteBattleLogProvider.LogElements.ToArray());
-            BattleHistory = completeLog;
+            //var completeLog = string.Join("\n", _batteBattleLogProvider.LogElements.ToArray());
+            //BattleHistory = completeLog;
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)

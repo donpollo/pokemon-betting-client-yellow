@@ -10,8 +10,86 @@
                 Android="20, 20, 20, 20"
                 WinPhone="20, 20, 20, 20" />
   </ContentPage.Padding>
-    <StackLayout VerticalOptions="Start" Orientation="Vertical">
-      <Label Text="{Binding InfoText}"/>
-      <Label Text="{Binding BattleHistory}" />
-    </StackLayout>
+    <Grid Margin="0" Padding="0"
+          RowSpacing="0" ColumnSpacing="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+      
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="80"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <Label Grid.Column="0" Grid.Row="0"
+             Margin="0"
+             Text="{Binding Battle.Team1.Trainer.Name}"
+             FontSize="18" FontAttributes="Bold"
+             LineBreakMode="TailTruncation"
+             HorizontalOptions="Start"/>
+      <StackLayout Grid.Column="0" Grid.Row="1"
+                   VerticalOptions="Fill">
+        <ListView Margin="0" SeparatorVisibility="None"
+                  HasUnevenRows="True"
+                  ItemsSource="{Binding Battle.Team1.Pokemons}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <Label Text="{Binding Name}"
+                       Margin="0"
+                       HorizontalOptions="Start" HorizontalTextAlignment="Start"
+                       LineBreakMode="CharacterWrap"/>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+
+      <ListView Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
+                Margin="0,12,0,0" SeparatorVisibility="None"
+                ItemsSource="{Binding BattleLog}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <StackLayout Orientation="Vertical">
+                <Label Text="{Binding Text}" LineBreakMode="WordWrap"
+                     Margin="0"
+                       HorizontalTextAlignment="Center"/>
+              <Label Text="{Binding DateTime, StringFormat='{0:hh\':\'mm\':\'ss}'}"
+                     Margin="0"
+                     HorizontalTextAlignment="End"
+                     LineBreakMode="CharacterWrap"/>
+              </StackLayout>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <Label Grid.Column="1" Grid.Row="0"
+             Margin="0"
+             Text="{Binding Battle.Team2.Trainer.Name}"
+             FontSize="18" FontAttributes="Bold"
+             LineBreakMode="TailTruncation"
+             HorizontalOptions="End"/>
+      <StackLayout Grid.Column="1" Grid.Row="1"
+                   VerticalOptions="FillAndExpand">
+        <ListView Margin="0" SeparatorVisibility="None"
+                  HasUnevenRows="True"
+                  ItemsSource="{Binding Battle.Team2.Pokemons}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <Label Text="{Binding Name}" Margin="0"
+                       HorizontalOptions="End" HorizontalTextAlignment="End"
+                       LineBreakMode="CharacterWrap"/>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
+    </Grid>
+    <!--<Label Text="{Binding InfoText}"/>
+    <Label Text="{Binding BattleHistory}" />-->
 </ContentPage>

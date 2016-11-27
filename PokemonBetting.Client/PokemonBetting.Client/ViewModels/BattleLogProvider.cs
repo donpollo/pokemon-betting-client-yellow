@@ -16,20 +16,20 @@ namespace PokemonBetting.Client.ViewModels
 
         public BattleLogProvider()
         {
-            LogElements = new ObservableCollection<string>();
+            LogElements = new ObservableCollection<BattleLogItem>();
         }
 
-        public async Task ProvideLogForBattle(int battleId)
+        public async Task ProvideLogForBattle(Battle battle)
         {
-            var battleApiClient = new BattleAPIClient();
-            var responseString = await battleApiClient.GetAsync(GetBattleRequest + battleId);
+            //var battleApiClient = new BattleAPIClient();
+            //var responseString = await battleApiClient.GetAsync(GetBattleRequest + battleId);
 
-            var battle = JsonConvert.DeserializeObject<Battle>(responseString);
+            //var battle = JsonConvert.DeserializeObject<Battle>(responseString);
 
             if (IsBattleFinished(battle))
             {
                 var logProvider = new FinishedBattleLogProvider(LogElements);
-                await logProvider.GetLogForFinishedBattle(battleId);
+                await logProvider.GetLogForFinishedBattle(battle.Id);
             }
             else
             {
@@ -43,6 +43,6 @@ namespace PokemonBetting.Client.ViewModels
             return !string.IsNullOrEmpty(battle.EndTime);
         }
 
-        public ObservableCollection<string> LogElements {get; }
+        public ObservableCollection<BattleLogItem> LogElements {get; }
     }
 }

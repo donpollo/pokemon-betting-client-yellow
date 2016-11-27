@@ -15,9 +15,9 @@ namespace PokemonBetting.Client.Backend.BattleLog
         private const string LogQuery = "battleLogs/";
 
         private BettingAPIClient bettingApiClient;
-        private ObservableCollection<string> targetCollection;
+        private ObservableCollection<BattleLogItem> targetCollection;
 
-        public FinishedBattleLogProvider(ObservableCollection<string> targetCollection)
+        public FinishedBattleLogProvider(ObservableCollection<BattleLogItem> targetCollection)
         {
             this.targetCollection = targetCollection;
 
@@ -34,7 +34,7 @@ namespace PokemonBetting.Client.Backend.BattleLog
                 var line = reader.ReadLine();
                 while (line != null)
                 {
-                    targetCollection.Add(line);
+                    //targetCollection.Add(line);
                     line = reader.ReadLine();
                 }
             }
