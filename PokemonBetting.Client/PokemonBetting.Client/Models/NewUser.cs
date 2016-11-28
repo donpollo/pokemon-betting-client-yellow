@@ -6,15 +6,15 @@ namespace PokemonBetting.Client.Models
 {
     public class NewUser : ModelBase<NewUser>
     {
-        public string UserName { get; }
-        public string EMail { get; }
+        public string Username { get; }
+        public string Email { get; }
         public string Password { get; }
 
         //Throws ValidationException if params are not valid
         public NewUser(string userName, string email, string pw, string pwCheck)
         {
-            UserName = userName;
-            EMail = email;
+            Username = userName;
+            Email = email;
             Password = pw;
             
             var v = new UserValidator(pwCheck);
@@ -31,8 +31,8 @@ namespace PokemonBetting.Client.Models
         public UserValidator(string pwCheck)
         {
             //all the validation rules
-            RuleFor(user => user.UserName).NotEmpty().WithMessage("Please specify a user name");
-            RuleFor(user => user.EMail).Must(BeAValidEmail).WithMessage("Please specify an email adress");
+            RuleFor(user => user.Username).NotEmpty().WithMessage("Please specify a user name");
+            RuleFor(user => user.Email).Must(BeAValidEmail).WithMessage("Please specify an email adress");
             RuleFor(user => user.Password).NotEmpty().WithMessage("Please specify a password").Equal(pwCheck).WithMessage("You entered two different passwords");
         }
 

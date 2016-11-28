@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace PokemonBetting.Client.Models
 {
-    public class Trainer
+    public class Trainer: ModelBase<Trainer>
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        public int Id { get; private set; }
+
+        public string Name { get; private set; }
     }
 }

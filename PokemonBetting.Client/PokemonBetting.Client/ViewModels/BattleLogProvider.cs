@@ -1,50 +1,48 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using PokemonBetting.Client.Backend;
 using PokemonBetting.Client.Backend.BattleLog;
 using PokemonBetting.Client.Models;
 using Prism.Mvvm;
+using PropertyChanged;
 
 namespace PokemonBetting.Client.ViewModels
 {
-    class BattleLogProvider : BindableBase
+    [ImplementPropertyChanged]
+    internal class BattleLogProvider : BindableBase
     {
-        private ObservableCollection<string> _logElements;
         private const string GetBattleRequest = "battles/";
 
         public BattleLogProvider()
         {
-            LogElements = new ObservableCollection<string>();
+            LogElements = new ObservableCollection<BattleLogItem>();
         }
 
-        public async void ProvideLogForBattle(int battleId)
+        public async Task ProvideLogForBattle(Battle battle)
         {
-            var battleApiClient = new BattleAPIClient();
-            var responseString = await battleApiClient.GetAsync(GetBattleRequest + battleId);
+            //var battleApiClient = new BattleAPIClient();
+            //var responseString = await battleApiClient.GetAsync(GetBattleRequest + battleId);
 
-            var battle = JsonConvert.DeserializeObject<Battle>(responseString);
+            //var battle = JsonConvert.DeserializeObject<Battle>(responseString);
 
             if (IsBattleFinished(battle))
             {
                 var logProvider = new FinishedBattleLogProvider(LogElements);
-                await logProvider.GetLogForFinishedBattle(battleId);
+                await logProvider.GetLogForFinishedBattle(battle.Id);
             }
             else
             {
                 var logProvider = new LiveBatteLogProvider(LogElements);
-                logProvider.StartPollingLogForBattle(battle);
+                Task.Run(async () => await logProvider.StartPollingLogForBattle(battle));
             }
         }
 
-        private bool IsBattleFinished(Battle battle)
+        private static bool IsBattleFinished(Battle battle)
         {
             return !string.IsNullOrEmpty(battle.EndTime);
         }
 
-        public ObservableCollection<string> LogElements
-        {
-            get { return _logElements; }
-            set { SetProperty(ref _logElements, value); }
-        }
+        public ObservableCollection<BattleLogItem> LogElements {get; }
     }
 }

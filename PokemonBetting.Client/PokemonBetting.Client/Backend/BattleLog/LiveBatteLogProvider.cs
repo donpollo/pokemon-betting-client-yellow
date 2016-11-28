@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using PokemonBetting.Client.Backend.APIClients;
 using PokemonBetting.Client.Models;
+using Prism.Mvvm;
 
 namespace PokemonBetting.Client.Backend.BattleLog
 {
@@ -12,32 +13,25 @@ namespace PokemonBetting.Client.Backend.BattleLog
         private const int TimeoutMinutes = 2;
         private const int OffsetBeforeBattleStartInSeconds = 10;
 
-        private BettingAPIClient bettingApiClient;
-        private ObservableCollection<string> targetCollection;
+        private readonly BettingAPIClient _bettingApiClient;
+        private readonly ObservableCollection<BattleLogItem> _targetCollection;
 
-        public LiveBatteLogProvider(ObservableCollection<string> targetCollection)
+        public LiveBatteLogProvider(ObservableCollection<BattleLogItem> targetCollection)
         {
-            this.targetCollection = targetCollection;
+            this._targetCollection = targetCollection;
 
-            bettingApiClient = new BettingAPIClient(new TimeSpan(0, 0, TimeoutMinutes, 0));
+            _bettingApiClient = new BettingAPIClient(new TimeSpan(0, 0, TimeoutMinutes, 0));
         }
 
         public async Task StartPollingLogForBattle(Battle battle)
         {
-            var startTime = DateTime.Parse(battle.StartTime, null);
-            var now = DateTime.Now;
+            var delay = battle.StartDateTime - DateTime.Now 
+                - TimeSpan.FromSeconds(OffsetBeforeBattleStartInSeconds);
 
-            var diff = startTime - now;
-            var delay = diff - new TimeSpan(0, 0, OffsetBeforeBattleStartInSeconds);
+            if (delay > TimeSpan.Zero)
+                await Task.Delay(delay);
 
-            if (delay < TimeSpan.Zero)
-            {
-                delay = TimeSpan.Zero;
-            }
-
-            await Task.Delay(delay);
-
-            Task.Run(() => PollLogElements(battle));
+            Task.Run(async() => await PollLogElements(battle));
         }
 
         private async Task PollLogElements(Battle battle)
@@ -46,8 +40,8 @@ namespace PokemonBetting.Client.Backend.BattleLog
             {
                 try
                 {
-                    var logElement = await bettingApiClient.GetAsync(LogQuery + battle.Id);
-                    targetCollection.Add(logElement);
+                    var logText = await _bettingApiClient.GetAsync(LogQuery + battle.Id);
+                    _targetCollection.Insert(0, new BattleLogItem(DateTime.Now, logText));
                 }
                 catch (TaskCanceledException)
                 {
@@ -55,6 +49,18 @@ namespace PokemonBetting.Client.Backend.BattleLog
                     break;
                 }
             }
+        }
+    }
+
+    public class BattleLogItem
+    {
+        public DateTime DateTime { get; set; }
+        public string Text { get; set; }
+
+        public BattleLogItem(DateTime dateTime, string text)
+        {
+            DateTime = dateTime;
+            Text = text;
         }
     }
 }

@@ -1,84 +1,65 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 using PokemonBetting.Client.Backend;
+using PokemonBetting.Client.Backend.BattleLog;
 using PokemonBetting.Client.Models;
 using Prism.Mvvm;
+using Prism.Navigation;
+using PropertyChanged;
 
 namespace PokemonBetting.Client.ViewModels
 {
-    public class BattleLogPageViewModel : BindableBase
+    [ImplementPropertyChanged]
+    public class BattleLogPageViewModel : BindableBase, INavigationAware
     {
         private const string NextBattleQueryString = "battles/?is_finished=false&offset=0&limit=10";
 
-        private BattleLogProvider batteBattleLogProvider;
-        private string infoText;
-        private string battleHistory;
+        private readonly BattleLogProvider _batteBattleLogProvider;
 
         public BattleLogPageViewModel()
         {
-            batteBattleLogProvider = new BattleLogProvider();
+            _batteBattleLogProvider = new BattleLogProvider();
 
             InfoText = "Not connected.";
             BattleHistory = "Here is the battle history.";
-
-            ConnectToNextBattle();
         }
 
-        public string InfoText
+        public string InfoText { get; private set; }
+
+        public string BattleHistory { get; private set; }
+
+        public Battle Battle { get; private set; }
+
+        public ObservableCollection<BattleLogItem> BattleLog => _batteBattleLogProvider?.LogElements ?? new ObservableCollection<BattleLogItem>();
+
+        private async Task ConnectTotBattle(Battle battle)
         {
-            get { return infoText; }
-            set { SetProperty(ref infoText, value); }
-        }
+            this.Battle = battle;
+            var battleId = battle.Id;
 
-        public string BattleHistory
-        {
-            get { return battleHistory; }
-            set { SetProperty(ref battleHistory, value); }
-        }
+            InfoText = $"Battle has the id {battleId} and starts at {battle.StartDateTime}.";
 
-        private async Task ConnectToNextBattle()
-        {
-            var battleApiClient = new BattleAPIClient();
-
-            var responseString = await battleApiClient.GetAsync(NextBattleQueryString);
-            var battles = JArray.Parse(responseString).ToObject<Battle[]>();
-
-            var selectedBattle = battles[0];
-
-            foreach (var battle in battles)
-            {
-                var startTime = DateTime.ParseExact(battle.StartTime, "MM/dd/yyyy HH:mm:ss", null);
-                var now = DateTime.Now;
-
-                var diff = startTime - now;
-
-                if (diff >= new TimeSpan(-1, 0, 0))
-                {
-                    selectedBattle = battle;
-                    break;
-                }
-            }
-
-            var battleId = selectedBattle.Id;
-
-            InfoText = $"Next battle has the id {battleId} and starts at {selectedBattle.StartTime}.";
-
-            batteBattleLogProvider.LogElements.CollectionChanged += LogProviderOnPropertyChanged;
-            batteBattleLogProvider.ProvideLogForBattle(battleId);
+            _batteBattleLogProvider.LogElements.CollectionChanged += LogProviderOnPropertyChanged;
+            await _batteBattleLogProvider.ProvideLogForBattle(battle);
         }
 
         private void LogProviderOnPropertyChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            var completeLog = string.Join("\n", batteBattleLogProvider.LogElements.ToArray());
-            BattleHistory = completeLog;
+            //var completeLog = string.Join("\n", _batteBattleLogProvider.LogElements.ToArray());
+            //BattleHistory = completeLog;
         }
 
+        public void OnNavigatedFrom(NavigationParameters parameters)
+        {
+        }
+
+        public async void OnNavigatedTo(NavigationParameters parameters)
+        {
+            var battle = parameters["Battle"] as Battle;
+            await ConnectTotBattle(battle);
+        }
     }
 }

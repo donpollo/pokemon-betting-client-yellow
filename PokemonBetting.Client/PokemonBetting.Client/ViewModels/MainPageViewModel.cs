@@ -3,7 +3,6 @@ using Microsoft.Practices.Unity;
 using PokemonBetting.Client.Backend;
 using PokemonBetting.Client.Backend.CallResults;
 using PokemonBetting.Client.Views;
-using PokemonBetting.Client.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -13,10 +12,9 @@ namespace PokemonBetting.Client.ViewModels
 {
     public class MainPageViewModel : BindableBase
     {
-        public DelegateCommand UserDisplayPageCommand { get; private set; }
-        public DelegateCommand BattlesPageCommand { get; set; }
+        public DelegateCommand UserDisplayPageCommand { get; }
+        public DelegateCommand BattlesPageCommand { get; }
 
-        public DelegateCommand NextLiveBattlePageCommand { get; private set; }
 
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _dialogService;
@@ -33,7 +31,6 @@ namespace PokemonBetting.Client.ViewModels
 
             UserDisplayPageCommand = new DelegateCommand(UserDisplayPage);
             BattlesPageCommand = new DelegateCommand(BattlesPage);
-            NextLiveBattlePageCommand = new DelegateCommand(NextLiveBattlePage);
         }
         
         public void EnsureAuthenticated()
@@ -70,11 +67,6 @@ namespace PokemonBetting.Client.ViewModels
         private async void BattlesPage()
         {
             await _navigationService.NavigateAsync(nameof(TabbedBattlesPage));
-        }
-
-        private async void NextLiveBattlePage()
-        {
-            await _navigationService.NavigateAsync(nameof(BattleLogPage), useModalNavigation: true);
         }
     }
 }

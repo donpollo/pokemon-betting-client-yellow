@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -25,7 +26,9 @@ namespace PokemonBetting.Client.Helpers
         {
             protected override string ResolvePropertyName(string propertyName)
             {
-                return propertyName.ToLower();
+                var underscoreSeparatedName = Regex.Replace(propertyName, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1_");
+
+                return underscoreSeparatedName.ToLower();
             }
 
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)

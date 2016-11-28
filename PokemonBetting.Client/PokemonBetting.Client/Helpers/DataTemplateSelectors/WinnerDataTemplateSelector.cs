@@ -16,7 +16,9 @@ namespace PokemonBetting.Client.Helpers.DataTemplateSelectors
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            Battle battle = (Battle)item;
+            var battle = item as Battle;
+            if (battle == null) return null;
+
             if (battle.Winner == null)
                 return NoWinnerTemplate;
             else if (battle.Winner.Id == battle.Team1.Trainer.Id)

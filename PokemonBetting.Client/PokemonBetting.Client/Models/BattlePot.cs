@@ -10,8 +10,8 @@ namespace PokemonBetting.Client.Models
 	class BattlePot : ModelBase<BattlePot>
 	{
 		[JsonProperty("trainerId")]
-		public int TrainerId { get; set; }
+		public int TrainerId { get; private set; }
 		[JsonProperty("pot")]
-		public int Pot { get; set; }
+		public int Pot { get; private set; }
 	}
 }
