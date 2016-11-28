@@ -25,12 +25,14 @@ namespace PokemonBetting.Client.Models
 
 		public string potRatio {get{
 			int min = Math.Min(Pot1, Pot2);
-			int p1 = Pot1;
-			int p2 = Pot2;
+			double p1 = Pot1;
+			double p2 = Pot2;
 			if (!min.Equals(0))
 			{
 				p1 = p1 / min;
 				p2 = p2 / min;
+				p1 = Math.Round(p1, 2, MidpointRounding.AwayFromZero);
+				p2 = Math.Round(p2, 2, MidpointRounding.AwayFromZero);
 			}
 			return "" + p1 + " : " + p2;
 		}}
