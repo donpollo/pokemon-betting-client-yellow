@@ -13,6 +13,7 @@
 						<Label Text="{Binding Team1.Trainer.Name}" />
 						<Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
 						<Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+						<Label Grid.Column="3" Text="{Binding potRatio}" HorizontalTextAlignment="End"/>
 					</Grid>
 				</ViewCell>
 			</DataTemplate>
@@ -22,6 +23,7 @@
 						<Label Text="{Binding Team1.Trainer.Name}" TextColor="Red" />
 						<Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
 						<Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" HorizontalTextAlignment="End"/>
+						<Label Grid.Column="3" Text="{Binding potRatio}" HorizontalTextAlignment="End"/>
 					</Grid>
 				</ViewCell>
 			</DataTemplate>
@@ -31,9 +33,11 @@
 						<Label Text="{Binding Team1.Trainer.Name}" />
 						<Label Grid.Column="1" Text="VS" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
 						<Label Grid.Column="2" Text="{Binding Team2.Trainer.Name}" TextColor="Red" HorizontalTextAlignment="End"/>
+						<Label Grid.Column="3" Text="{Binding potRatio}" HorizontalTextAlignment="End"/>
 					</Grid>
 				</ViewCell>
 			</DataTemplate>
+			
 			<selectors:WinnerDataTemplateSelector x:Key="winnerDataTemplateSelector"
         NoWinnerTemplate="{StaticResource noWinnerTemplate}"
         Team1WinnerTemplate="{StaticResource team1WinnerTemplate}"

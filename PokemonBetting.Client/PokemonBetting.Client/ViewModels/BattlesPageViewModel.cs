@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using PokemonBetting.Client.Backend.APIClients;
 using PokemonBetting.Client.Models;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -15,6 +16,8 @@ namespace PokemonBetting.Client.ViewModels
 {
     public class BattlesPageViewModel : BindableBase
     {
+		BettingAPIClient BettingClient = new BettingAPIClient();
+
         INavigationService _navigationService;
 
         public ObservableCollection<Battle> Battles { get; set; }
@@ -75,6 +78,18 @@ namespace PokemonBetting.Client.ViewModels
             string responseString = await response.Content.ReadAsStringAsync();
             JArray jArray = JArray.Parse(responseString);
             Battle[] battleArray = jArray.ToObject<Battle[]>();
+			
+			//get the current pots for each battle
+			foreach(Battle b in battleArray)
+			{
+				responseString = await BettingClient.GetAsync("battle/" + b.Id + "/pots");
+				jArray = JArray.Parse(responseString);
+				BattlePot[] pots = jArray.ToObject<BattlePot[]>();
+
+				//TODO: check if trainerId matches
+				b.Pot1 = pots[0].Pot;
+				b.Pot2 = pots[1].Pot;
+			}
 
             Battles.Clear();
             foreach (Battle b in battleArray)
